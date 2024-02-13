@@ -1804,6 +1804,10 @@
 								"exec": [
 									"pm.test(\"status is 200\",function(){\r",
 									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"hasError is false\",function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false)\r",
 									"})"
 								],
 								"type": "text/javascript"
