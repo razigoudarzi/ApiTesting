@@ -1,0 +1,2687 @@
+{
+	"info": {
+		"_postman_id": "c789ac18-1001-45cb-be20-ad322bcd7f3e",
+		"name": "Personnel.v1",
+		"description": "سناریوهای سیستم پرسنلی :\n\n1- ایجاد شغل\n\n2- ایجاد درختواره تشکیلات سازمانی و اتصال پست و واحد به آن\n\n3- ایجاد پرسنل جدید\n\n4- صدور حکم برای پرسنل\n\n5- صدور قرارداد برای پرسنل",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fc28e27e-0cd6-466f-90f2-e792e6a8b871",
+								"exec": [
+									"pm.test(\"status code is 200\",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"has error is false \",function(){\r",
+									"\r",
+									"    pm.expect((pm.response.json()).hasError).to.equal(false);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"//set variable\r",
+									"\r",
+									"pm.collectionVariables.set(\"Token\",(pm.response.json()).data.token)\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "26afa109-5ad6-48b1-8baf-50f1d8596b81",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer null"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"defaultLanguage\": 1\r\n}"
+						},
+						"url": "http://172.31.31.5:1001/api/account/login",
+						"description": "لاگین با یوزر پسورد سرور تست"
+					},
+					"response": []
+				}
+			],
+			"id": "745b5778-212e-44e7-aa80-61c2ae783781"
+		},
+		{
+			"name": "Job",
+			"item": [
+				{
+					"name": "InsertJob",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d7c70abc-eb55-49a9-8440-3302e8ae1a04",
+								"exec": [
+									"pm.test(\"status code is \",function(){\r",
+									"\r",
+									"    pm.response.to.have.status(200)\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"hasError :\",function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.equal(false)\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"message :\" ,function(){\r",
+									"    pm.expect((pm.response.json()).friendlyMessages[0].message).to.equal(\"ركورد با موفقیت ثبت شد\")\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//console.log(code)\r",
+									"\r",
+									"//set variable \r",
+									"\r",
+									"pm.collectionVariables.set(\"job_id\",(pm.response.json()).id)\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e30594be-8710-4996-a7cb-781562a83a34",
+								"exec": [
+									"\r",
+									"\r",
+									"const number = Math.floor((Math.random()*20000)+20000)\r",
+									"pm.collectionVariables.set(\"Job_number\",number);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "5d6bd8a0-f182-44e8-a7ee-7d423783f8f6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmNDc4OTU1ZC1lNDE1LTRiMTYtODdkYi1jOTdlODMyZGUwYzUiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDU4MTgyMzUsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiJhNDc2MTcyNC1mN2FiLTQ2MTItODUzZi1lZGE3ZWM5ZTdhYjYiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNTgxODIzNSwiZXhwIjoxNzA1ODM2MjM1LCJhdWQiOiJBbnkifQ.Fvp6Q7urjVMdFhjOkJQXKQqFcwKVXq2RXQH_3BkC100"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "HR.Job.JobHeader.Header"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"number\": {{Job_number}},\r\n    \"name\": \" {{Job_number}}   تست گودرزی\",\r\n    \"jobRankCode\": 13,\r\n    \"standardPosition\": null,\r\n    \"jobEquivalentInsuranceId\": 311008,\r\n    \"jobEquivalentInsuranceTypeCode\": 2\r\n}"
+						},
+						"url": "{{url}}/api/JobHeader/InsertAsync"
+					},
+					"response": []
+				}
+			],
+			"id": "c52a24e0-f039-4b83-a276-aab2fb42d06e",
+			"description": "اطلاعات پایه مشاغل/ شغل / ایجاد شغل جدید"
+		},
+		{
+			"name": "organizationTree",
+			"item": [
+				{
+					"name": "InsertOrganizationTree",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "738e5bb7-b96f-47c3-bef2-8e30486e704f",
+								"exec": [
+									"pm.test(\"status code is 200?\",function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"hasError is false ?\", function(){\r",
+									"\r",
+									"pm.expect((pm.response.json()).hasError).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"message ?\", function(){\r",
+									"    pm.expect((pm.response.json()).friendlyMessages[0].message).to.eql(\"ركورد با موفقیت ثبت شد\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"//set variable\r",
+									"\r",
+									"pm.collectionVariables.set(\"OrganizationTree_id\",(pm.response.json()).id);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "90d3992c-b8bc-47a5-a64e-6e3457103527",
+								"exec": [
+									"\r",
+									"//set version\r",
+									"const version = Math.floor((Math.random()*20000)+20000)\r",
+									"pm.collectionVariables.set(\"version\",version);\r",
+									"\r",
+									"//get current date\r",
+									"let moment = require('moment')\r",
+									"pm.collectionVariables.set(\"current_Date\",moment().format((\"YYYY-MM-DDTHH:mm:ss\"))); "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "59287357-1fbd-484f-afe0-7719cfb7e7ff",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2ODk1ODdmNy03ZDRiLTRlYzAtYTFlMi00ODg1Nzg5YzBmMTkiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDU4MTg5NjQsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiJjZWVhNzg0Ny0wNDBlLTQ3N2MtYWZiMy1lMGUyZGYzNjYyMDMiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNTgxODk2NCwiZXhwIjoxNzA1ODM2OTY0LCJhdWQiOiJBbnkifQ.shG4r-Olu5p-liITlVzPdFDDUR-SjYqYpf6smBQSbOU"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "HR.Tree.OrganizationTree.Header"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"checked\": false,\r\n    \"effectDate\": \"{{current_Date}}\",\r\n    \"name\": \"{{version}}  درختواره تست گودرزی\",\r\n    \"version\": \"{{version}}\"\r\n}"
+						},
+						"url": "{{url}}/api/Organization/InsertAsync/"
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrganizationTreeGetbyParentId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5ccba480-8278-4f63-8f5a-1ff90582480c",
+								"exec": [
+									"pm.test(\"status is 200\" , function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"hasError is false\" ,function(){\r",
+									"     \r",
+									"      pm.expect((pm.response.json()).hasError).to.eql(false);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"//set variable\r",
+									"pm.collectionVariables.set(\"parentOrganizationUnitId\",(pm.response.json()).data[0].id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "ed44ed27-572d-44e5-b825-a547769185df",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1MmRkMzVkYS1mYzU4LTQ4YmEtYTQxMS02NGM5MjRhYjc0M2MiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDU4MzI3MTEsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiJkNmU4Mjc3OC00MWM5LTQ1YzMtOTI1MS00YjE1Zjk0NTFjZTciLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNTgzMjcxMSwiZXhwIjoxNzA1ODUwNzExLCJhdWQiOiJBbnkifQ.EkGLFpsYgXOBt94-gkM1BbtG1WLi9ULHs-7xbw-d8RA"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "HR.Tree.OrganizationTree.Header"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"parentId\": null,\r\n    \"parentTypeCode\": null,\r\n    \"organizationId\": {{OrganizationTree_id}},\r\n    \"hasPost\": 0,\r\n    \"responsibilityRankCode\": 1,\r\n    \"pageMeta\": {\r\n        \"currentPage\": -1\r\n    },\r\n    \"filters\": {},\r\n    \"fastFilter\": null\r\n}"
+						},
+						"url": "http://172.31.31.5:1014/api/OrganizationTree/GetOrganizationTreeGetbyParentId"
+					},
+					"response": []
+				},
+				{
+					"name": "InsertOrganizationUnit",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0d065993-f58a-41eb-bf80-9710fbcce765",
+								"exec": [
+									"pm.test(\"status code is 200?\",function(){\r",
+									"\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"hasError is fales \", function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false);\r",
+									"\r",
+									"})\r",
+									"\r",
+									"pm.test(\"\",function(){\r",
+									"    pm.expect((pm.response.json()).friendlyMessages[0].message).to.eql(\"ركورد با موفقیت ثبت شد\")\r",
+									"});\r",
+									"\r",
+									"//set variable\r",
+									"\r",
+									"pm.collectionVariables.set(\"Unit_Id\",(pm.response.json()).id);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "be7b70b4-4b61-4d79-97da-0923f5fbb570",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2ODk1ODdmNy03ZDRiLTRlYzAtYTFlMi00ODg1Nzg5YzBmMTkiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDU4MTg5NjQsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiJjZWVhNzg0Ny0wNDBlLTQ3N2MtYWZiMy1lMGUyZGYzNjYyMDMiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNTgxODk2NCwiZXhwIjoxNzA1ODM2OTY0LCJhdWQiOiJBbnkifQ.shG4r-Olu5p-liITlVzPdFDDUR-SjYqYpf6smBQSbOU"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "HR.Tree.OrganizationTree.OrganizationUnit"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"واحد تست گودرزی\",\r\n    \"number\": 0,\r\n    \"summaryName\": null,\r\n    \"parentOrganizationUnitId\": {{parentOrganizationUnitId}},\r\n    \"organizationId\": {{OrganizationTree_id}},\r\n    \"activityAreaCode\": null,\r\n    \"activityCityId\": null,\r\n    \"tasks\": null\r\n}"
+						},
+						"url": "{{url}}/api/OrganizationUnit/InsertAsync"
+					},
+					"response": []
+				},
+				{
+					"name": "OrganizationPost",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "24181b99-49fd-4719-a143-1f155db372b7",
+								"exec": [
+									"pm.test(\"status code is 200\",function(){\r",
+									"\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									";\r",
+									"\r",
+									"pm.test(\"hasError is false \",function(){\r",
+									"\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false);\r",
+									"})\r",
+									"\r",
+									"\r",
+									"pm.test(\"message \",function(){\r",
+									"\r",
+									"    pm.expect((pm.response.json()).friendlyMessages[0].message).to.eql(\"ركورد با موفقیت ثبت شد\");\r",
+									"})\r",
+									"\r",
+									"\r",
+									"//set variable\r",
+									"\r",
+									"pm.collectionVariables.set(\"post_Id\",(pm.response.json()).id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "6bf23ddd-e6bc-48b9-9c5b-7cb821b6821e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Access-Control-Request-Headers",
+								"value": "authorization,content-type,res-type,sub_system"
+							},
+							{
+								"key": "Access-Control-Request-Method",
+								"value": "POST"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1MmRkMzVkYS1mYzU4LTQ4YmEtYTQxMS02NGM5MjRhYjc0M2MiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDU4MzI3MTEsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiJkNmU4Mjc3OC00MWM5LTQ1YzMtOTI1MS00YjE1Zjk0NTFjZTciLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNTgzMjcxMSwiZXhwIjoxNzA1ODUwNzExLCJhdWQiOiJBbnkifQ.EkGLFpsYgXOBt94-gkM1BbtG1WLi9ULHs-7xbw-d8RA"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Res-Type",
+								"value": "HR.Tree.OrganizationTree.OrganizationPost"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"کارشناس تست گودرزی\",\r\n    \"number\": 0,\r\n    \"parentOrganizationUnitId\": {{Unit_Id}},\r\n    \"parentOrganizationPostId\": null,\r\n    \"organizationId\": {{OrganizationTree_id}},\r\n    \"postTypeCode\": 0,\r\n    \"personCount\": \"1\",\r\n    \"maxDuration\": null,\r\n    \"standardPosition\": \"Test specialist\",\r\n    \"hasOperator\": null,\r\n    \"requirementDate\": null,\r\n    \"organizationRankCode\": 9,\r\n    \"relatedJobHeaderId\": {{job_id}},\r\n    \"strategicAreaCode\": null,\r\n    \"activityCityId\": null,\r\n    \"extraAuthorityDescription\": null,\r\n    \"extraDutiesDescription\": null,\r\n    \"organizationPostRelational\": null,\r\n    \"jobGroupLevelCode\": 1,\r\n    \"genderCode\": null,\r\n    \"maxAge\": 70,\r\n    \"minAge\": 18,\r\n    \"fromJobGroupCode\": null,\r\n    \"toJobGroupCode\": null,\r\n    \"educationDegreeCode\": 7,\r\n    \"educationFieldCodeList\": \"\",\r\n    \"educationTendencyCodeList\": \"\",\r\n    \"jobExpDuration\": \"2\",\r\n    \"responsibilityRankCode\": 6,\r\n    \"postAuthority\": null,\r\n    \"postDuties\": null,\r\n    \"postIndicator\": null,\r\n    \"postMerit\": null,\r\n    \"postResponsibility\": null,\r\n    \"postTrainingStandard\": null,\r\n    \"guarantyLevelCode\": null,\r\n    \"tempGuid\": \"6e7c793f-ef92-4f86-8439-de358b8e23b8\"\r\n}"
+						},
+						"url": "{{url}}/api/OrganizationPost/InsertAsync"
+					},
+					"response": []
+				}
+			],
+			"id": "04d2342a-5284-4c45-92e8-08ca30768643",
+			"description": "فولدر مربوط به ساخت درختواره ی تشکیلات سازمانی / اتصال واحد و پست"
+		},
+		{
+			"name": "Employee",
+			"item": [
+				{
+					"name": "Insert-Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9f2bf17d-36ef-4fb2-b5be-2fe20834bf15",
+								"exec": [
+									"pm.test(\"status is 200 \",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"hasError is false\",function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false)\r",
+									"})\r",
+									"\r",
+									"\r",
+									"pm.collectionVariables.set(\"Employee_id\",pm.response.json().id)\r",
+									"\r",
+									"pm.collectionVariables.set(\"party_id\",pm.response.json().data.partyId)\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "f1e8b79c-672a-4b76-a7bc-09ba1423e063",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1OTkxMzYzNi01NWJjLTRmOTAtOTE5Zi04OGU4M2JlY2VlMjUiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDY0MjM3NTksImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiIzYzA0NzRjMS1kNzZiLTRjMmQtOTY5ZC1iY2EyYTczMjkzMjAiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNjQyMzc1OSwiZXhwIjoxNzA2NDQxNzU5LCJhdWQiOiJBbnkifQ.BPs837sKjAsv3Bq1DK3Oq9Z3mRVpfaExOo1V2EfqOWs"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "HR.Employee.EmployeeGrid.Header"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nationalityNumber\": \"8074314189\",\r\n    \"applicantId\": null,\r\n    \"foreignNationalityNumber\": null,\r\n    \"employeeNumber\": \"140208\",\r\n    \"certificateNumber\": \"450\",\r\n    \"firstName\": \"مریم\",\r\n    \"hasForeignNationality\": false,\r\n    \"lastName\": \"حیدری\",\r\n    \"nickname\": null,\r\n    \"friendlyName\": null,\r\n    \"fatherName\": \"علی\",\r\n    \"birthDate\": \"1990-04-23\",\r\n    \"realBirthDate\": \"1990-04-23\",\r\n    \"certificateDate\": \"1990-04-23\",\r\n    \"birthLocationCityId\": 10474,\r\n    \"certificateLocationCityId\": 10474,\r\n    \"healthStatusCode\": 1,\r\n    \"religionCode\": 1,\r\n    \"religionBranchCode\": 1,\r\n    \"employmentDate\": \"{{current_Date}}\",\r\n    \"confirmFirstEmploymentDate\": \"{{current_Date}}\",\r\n    \"firstEmploymentDate\": \"{{current_Date}}\",\r\n    \"houseStatusCode\": null,\r\n    \"rentAmount\": null,\r\n    \"mortgageAmount\": null,\r\n    \"marriageStatusCode\": null,\r\n    \"genderCode\": 2,\r\n    \"nationalityCountryId\": 400,\r\n    \"citizenCountryId\": 400,\r\n    \"necessaryPhone\": \"0238887\",\r\n    \"mobile\": \"09365355763\",\r\n    \"bloodGroupCode\": null,\r\n    \"workCertificationNo\": null,\r\n    \"insuranceNumber\": null,\r\n    \"email\": null,\r\n    \"personalEmail\": null,\r\n    \"acceptableHistory\": false,\r\n    \"isProductionWorker\": null,\r\n    \"cardNumber\": null,\r\n    \"description\": null,\r\n    \"certificateSerialFirstPartCode\": null,\r\n    \"certificateSerialSecondPart\": null,\r\n    \"certificateSerialThirdPart\": null,\r\n    \"isReplica\": false,\r\n    \"isTransfered\": false,\r\n    \"SubSystemId\": 1\r\n}"
+						},
+						"url": "{{url}}/api/Employee/InsertAsync"
+					},
+					"response": []
+				},
+				{
+					"name": "EmployeeFinance",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e87099a7-48b3-4899-82ad-aaf579ef0a7e",
+								"exec": [
+									"pm.test(\"status code is 200?\",function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"hasError is false ?\", function(){\r",
+									"\r",
+									"pm.expect((pm.response.json()).hasError).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"message ?\", function(){\r",
+									"    pm.expect((pm.response.json()).friendlyMessages[0].message).to.eql(\"ركورد با موفقیت به روزرسانی شد\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "f863d6a6-f80f-4c4b-96c4-a945db5a3c49",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1OTkxMzYzNi01NWJjLTRmOTAtOTE5Zi04OGU4M2JlY2VlMjUiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDY0MjM3NTksImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiIzYzA0NzRjMS1kNzZiLTRjMmQtOTY5ZC1iY2EyYTczMjkzMjAiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNjQyMzc1OSwiZXhwIjoxNzA2NDQxNzU5LCJhdWQiOiJBbnkifQ.BPs837sKjAsv3Bq1DK3Oq9Z3mRVpfaExOo1V2EfqOWs"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "HR.Employee.Employee.Header"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"employeeId\": {{Employee_id}},\r\n    \"insuranceTypeCode\": 2,\r\n    \"insuranceBranchId\": 3096,\r\n    \"costCenterPartyId\": null,\r\n    \"costCenterGroupCode\": null,\r\n    \"insuranceBookNumber\": null,\r\n    \"treatyRowNumber\": \"TEST KIA\",\r\n    \"exemptionCode\": null,\r\n    \"taxBranchId\": 3503,\r\n    \"repurchaseDate\": \"{{current_Date}}\",\r\n    \"repurchaseCoef\": null,\r\n    \"insuranceNumber\": \"100\",\r\n    \"acceptableHistory\": false\r\n}"
+						},
+						"url": "{{url}}/api/Employee/EmployeeFinanceUpdateAsync"
+					},
+					"response": []
+				},
+				{
+					"name": "InsertAddress",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b65b2798-180c-49cd-8a4a-83767a24aecd",
+								"exec": [
+									"pm.test(\"status code is 200?\",function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"hasError is false ?\", function(){\r",
+									"\r",
+									"pm.expect((pm.response.json()).hasError).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"message ?\", function(){\r",
+									"    pm.expect((pm.response.json()).friendlyMessages[0].message).to.eql(\"ركورد با موفقیت ثبت شد\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "62af6de8-d810-45db-aa38-74b1bb2d22c1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1OTkxMzYzNi01NWJjLTRmOTAtOTE5Zi04OGU4M2JlY2VlMjUiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDY0MjM3NTksImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiIzYzA0NzRjMS1kNzZiLTRjMmQtOTY5ZC1iY2EyYTczMjkzMjAiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNjQyMzc1OSwiZXhwIjoxNzA2NDQxNzU5LCJhdWQiOiJBbnkifQ.BPs837sKjAsv3Bq1DK3Oq9Z3mRVpfaExOo1V2EfqOWs"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "HR.Share.Address.Header"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"checked\": false,\r\n    \"partyId\": {{party_id}},\r\n    \"partyRoleCode\": 10,\r\n    \"countryId\": 400,\r\n    \"countryIdName\": \"ایران\",\r\n    \"relationObjectId\": {{Employee_id}},\r\n    \"relationEntityName\": \"hr.Employee\",\r\n    \"relationObjectNumber\": 140208,\r\n    \"relationDescription\": \"\",\r\n    \"provinceId\": 464,\r\n    \"provinceIdName\": \"(021) تهران\",\r\n    \"addressTypeCode\": 1,\r\n    \"cityId\": 10474,\r\n    \"cityIdName\": \"تهران\",\r\n    \"firstLine\": \"تهران\"\r\n}"
+						},
+						"url": "http://172.31.31.5:1012/api/Address/InsertAsync/"
+					},
+					"response": []
+				},
+				{
+					"name": "InsertEmployeeAcount",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1793df29-6579-4e71-8c0f-80d5f5e8294b",
+								"exec": [
+									"pm.test(\"status code is 200\",function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"hasError is false ?\", function(){\r",
+									"\r",
+									"pm.expect((pm.response.json()).hasError).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"message ?\", function(){\r",
+									"    pm.expect((pm.response.json()).friendlyMessages[0].message).to.eql(\"ركورد با موفقیت ثبت شد\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "38b17532-f47f-44d9-923c-e9219d78b630",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1OTkxMzYzNi01NWJjLTRmOTAtOTE5Zi04OGU4M2JlY2VlMjUiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDY0MjM3NTksImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiIzYzA0NzRjMS1kNzZiLTRjMmQtOTY5ZC1iY2EyYTczMjkzMjAiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNjQyMzc1OSwiZXhwIjoxNzA2NDQxNzU5LCJhdWQiOiJBbnkifQ.BPs837sKjAsv3Bq1DK3Oq9Z3mRVpfaExOo1V2EfqOWs"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "HR.Share.PartyAccount.Header"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"checked\": false,\r\n    \"subSystemId\": 1,\r\n    \"partyId\": {{party_id}},\r\n    \"bankPartyId\": 508,\r\n    \"bankBranchPartyId\": 586,\r\n    \"bankPartyIdName\": \"توسعه تعاون _ 2                   \",\r\n    \"bankBranchPartyIdName\": \"توسعه تعاون شعبه وصال شیرازی کد 1700 _ 35447               \",\r\n    \"iban\": \"\",\r\n    \"partyAccountTypeCode\": 1,\r\n    \"partyAccountTypeCodeName\": \"جاری\",\r\n    \"cardNumber\": \"6037785467324536\"\r\n}"
+						},
+						"url": "http://172.31.31.5:1012/api/PartyAccount/InsertAsync/"
+					},
+					"response": []
+				},
+				{
+					"name": "InsertEducation",
+					"id": "ed836452-7d3a-4ff5-b257-2ade788d484c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0N2E5MWRlYS0zY2ZlLTRjYzYtOGIwZS0wZDBjNjZmNGQwNjAiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDY0MzYwNzYsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiIyYWJhMTczMi0xYWUwLTQ5NDgtYjM3Ny04YjFjZGM0MTlhZWEiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNjQzNjA3NiwiZXhwIjoxNzA2NDU0MDc2LCJhdWQiOiJBbnkifQ.oWJiMsuVws623phAd5TFjAnlFc8mWFlcqSb_WJTzohQ"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "HR.Employee.DocEducation"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"checked\": false,\r\n    \"subSystemId\": 1,\r\n    \"effectiveDate\": \"2023-05-22T00:00:00\",\r\n    \"employeeIdName\": \"مریم حیدری\",\r\n    \"employeeId\": {{Employee_id}},\r\n    \"startDate\": \"2012-09-22T00:00:00\",\r\n    \"endDate\": \"2016-07-22T00:00:00\",\r\n    \"educationDegreeCode\": 7,\r\n    \"educationDegreeCodeName\": \"کارشناسی\",\r\n    \"educationFieldTypeCode\": 7,\r\n    \"educationFieldCode\": 240,\r\n    \"educationFieldTypeCodeName\": \"فنی و مهندسی\",\r\n    \"educationFieldCodeName\": \"مهندسی کامپیوتر\",\r\n    \"educationTendencyCode\": 732,\r\n    \"educationTendencyCodeName\": \"نرم افزار\",\r\n    \"instituteTypeCode\": 2,\r\n    \"instituteCode\": 208,\r\n    \"instituteTypeCodeName\": \"آزاد\",\r\n    \"instituteCodeName\": \"دانشگاه آزاداسلامی واحدتهران جنوب\",\r\n    \"duration\": 1400,\r\n    \"effectiveDuration\": 1400,\r\n    \"insuranceDuration\": 1400\r\n}"
+						},
+						"url": "{{url}}/api/DocEducation/InsertAsync/"
+					},
+					"response": []
+				},
+				{
+					"name": "Insert-JobExperience",
+					"id": "087d62d7-a194-4c46-beab-074c2b59c3f8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0N2E5MWRlYS0zY2ZlLTRjYzYtOGIwZS0wZDBjNjZmNGQwNjAiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDY0MzYwNzYsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiIyYWJhMTczMi0xYWUwLTQ5NDgtYjM3Ny04YjFjZGM0MTlhZWEiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNjQzNjA3NiwiZXhwIjoxNzA2NDU0MDc2LCJhdWQiOiJBbnkifQ.oWJiMsuVws623phAd5TFjAnlFc8mWFlcqSb_WJTzohQ"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "HR.Employee.DocJobExperience"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"checked\": false,\r\n    \"subSystemId\": 1,\r\n    \"employeeIdName\": \"مریم حیدری\",\r\n    \"effectiveDate\": \"2023-05-22T00:00:00\",\r\n    \"experienceTypeCode\": 2,\r\n    \"experienceTypeCodeName\": \"خارج سازمان\",\r\n    \"employeeId\": {{Employee_id}},\r\n    \"duration\": 365,\r\n    \"effectiveDuration\": 365,\r\n    \"insuranceDuration\": 365,\r\n    \"fromDate\": \"2018-03-21T00:00:00\",\r\n    \"toDate\": \"2019-03-20T00:00:00\",\r\n    \"institute\": \"گلرنگ سیستم\",\r\n    \"experienceRelationTypeCode\": 1,\r\n    \"experienceRelationTypeCodeName\": \"مرتبط\",\r\n    \"externalPosition\": \"برنامه نویس\"\r\n}"
+						},
+						"url": "{{url}}/api/DocJobExperience/InsertAsync/"
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteEmployee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3a0bae8f-8b7a-49b3-b55e-b473ad15462c",
+								"exec": [
+									"pm.test(\"status is 200 ?\",function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"hasError is false \",function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "a163e4b0-3327-48ad-bc56-baf62ea0a6b7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0N2E5MWRlYS0zY2ZlLTRjYzYtOGIwZS0wZDBjNjZmNGQwNjAiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDY0MzYwNzYsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiIyYWJhMTczMi0xYWUwLTQ5NDgtYjM3Ny04YjFjZGM0MTlhZWEiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNjQzNjA3NiwiZXhwIjoxNzA2NDU0MDc2LCJhdWQiOiJBbnkifQ.oWJiMsuVws623phAd5TFjAnlFc8mWFlcqSb_WJTzohQ"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "HR.Employee.EmployeeGrid.Header"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"url": "http://172.31.31.5:1014/api/Employee/DeleteAsync/{{Employee_id}}"
+					},
+					"response": []
+				}
+			],
+			"id": "85da4317-2175-4d4b-a3ee-623a8349744a",
+			"description": "ایجاد پرسنل جدید"
+		},
+		{
+			"name": "IssueCommand",
+			"item": [
+				{
+					"name": "Sodour Hokm",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ecf5a468-bb7d-4699-ae87-30d633daee82",
+								"exec": [
+									"pm.test(\"status is 200 \",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"hasError is false\",function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false)\r",
+									"})\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"//set variable\r",
+									"\r",
+									"pm.collectionVariables.set(\"Hokm_id\",(pm.response.json()).id);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6fc420e8-5a14-464a-afb9-f6b7122eb289",
+								"exec": [
+									"let moment = require('moment')\r",
+									"pm.collectionVariables.set(\"current_Date\",moment().format((\"YYYY-MM-DDTHH:mm:ss\"))); "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "8e5bde8e-9635-4d5a-89c8-97e14ae02ccd",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzZGZkMmI3MS0wNjMxLTRhZGItOWU2Yi1hNzBiOWJjN2Y2OWQiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDU5MTg0OTIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiJjNmIyZjQzMS04NTE4LTQ4YmItYWM0NC04YzFhMGU5NWFlNWMiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNTkxODQ5MiwiZXhwIjoxNzA1OTM2NDkyLCJhdWQiOiJBbnkifQ.IbxhibB5ZGuF21DI3pgy_MYMzOR-WnrpkpbiCApGryk"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "HR.Command.IssueCommand"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\": 0,\r\n    \"SubSystemId\": 1,\r\n    \"EmployeeId\": 12,\r\n    \"CommandTrack\": null,\r\n    \"IssueDate\": \"{{current_Date}}\",\r\n    \"EffectDate\": \"2023-05-22\",\r\n    \"CommandTypeCode\": 2,\r\n    \"TransactionYearMonthDateTime\": \"2023-05-22\",\r\n    \"Description\": null,\r\n    \"WorkPlaceId\": 3,\r\n    \"OrganizationPostId\": {{post_Id}},\r\n    \"OrganizationUnitId\": {{Unit_Id}},\r\n    \"JobHeaderId\": {{job_id}},\r\n    \"DocEducationId\": 152,\r\n    \"JobAcquisitionRequirementId\": 1,\r\n    \"EmployeeJobRankCode\": 13,\r\n    \"PaymentTypeCode\": null,\r\n    \"EmploymentTypeCode\": 1,\r\n    \"EndDateOfCommandImpact\": null,\r\n    \"CommandParameterHeaderId\": 13,\r\n    \"UpgradeDate\": null,\r\n    \"OrdinationDate\": null,\r\n    \"AgentToCompanyId\": null,\r\n    \"AgentFromCompanyId\": null,\r\n    \"TransferFromCompanyId\": null,\r\n    \"TransferToCompanyId\": null,\r\n    \"CutReasonCode\": null,\r\n    \"TransferDate\": null,\r\n    \"TransferReasonDescription\": null,\r\n    \"GroupNumber\": 10,\r\n    \"RankNumber\": 0,\r\n    \"GradeNumber\": 0,\r\n    \"IsCheckOutDone\": false,\r\n    \"IsLoanPay\": false,\r\n    \"CommandHeaderStatusCode\": 1,\r\n    \"ReportToEmployeeId\": null,\r\n    \"CommandDetail\": [\r\n        {\r\n            \"SystemCodeDetailId\": 141687,\r\n            \"SystemCodeDetailCodeNumber\": 102,\r\n            \"PreviousCommandDetailId\": 252695,\r\n            \"NewValue\": 10616568,\r\n            \"UserValue\": 10616568,\r\n            \"OldValue\": 10616568,\r\n            \"Coef\": 1,\r\n            \"FormulaId\": null,\r\n            \"SerialId\": 0\r\n        },\r\n        {\r\n            \"SystemCodeDetailId\": 141690,\r\n            \"SystemCodeDetailCodeNumber\": 107,\r\n            \"PreviousCommandDetailId\": 252696,\r\n            \"NewValue\": 9000000,\r\n            \"UserValue\": 9000000,\r\n            \"OldValue\": 9000000,\r\n            \"Coef\": 1,\r\n            \"FormulaId\": null,\r\n            \"SerialId\": 0\r\n        },\r\n        {\r\n            \"SystemCodeDetailId\": 141708,\r\n            \"SystemCodeDetailCodeNumber\": 135,\r\n            \"PreviousCommandDetailId\": null,\r\n            \"NewValue\": null,\r\n            \"UserValue\": 0,\r\n            \"OldValue\": null,\r\n            \"Coef\": 1,\r\n            \"FormulaId\": null,\r\n            \"SerialId\": 0\r\n        },\r\n        {\r\n            \"SystemCodeDetailId\": 141711,\r\n            \"SystemCodeDetailCodeNumber\": 139,\r\n            \"PreviousCommandDetailId\": null,\r\n            \"NewValue\": 0,\r\n            \"UserValue\": 0,\r\n            \"OldValue\": null,\r\n            \"Coef\": 1,\r\n            \"FormulaId\": null,\r\n            \"SerialId\": 0\r\n        },\r\n        {\r\n            \"SystemCodeDetailId\": 141713,\r\n            \"SystemCodeDetailCodeNumber\": 141,\r\n            \"PreviousCommandDetailId\": 252697,\r\n            \"NewValue\": 300000,\r\n            \"UserValue\": 300000,\r\n            \"OldValue\": 300000,\r\n            \"Coef\": 1,\r\n            \"FormulaId\": null,\r\n            \"SerialId\": 0\r\n        },\r\n        {\r\n            \"SystemCodeDetailId\": 141714,\r\n            \"SystemCodeDetailCodeNumber\": 142,\r\n            \"PreviousCommandDetailId\": 252698,\r\n            \"NewValue\": 195000,\r\n            \"UserValue\": 195000,\r\n            \"OldValue\": 195000,\r\n            \"Coef\": 1,\r\n            \"FormulaId\": null,\r\n            \"SerialId\": 0\r\n        },\r\n        {\r\n            \"SystemCodeDetailId\": 141715,\r\n            \"SystemCodeDetailCodeNumber\": 143,\r\n            \"PreviousCommandDetailId\": 252699,\r\n            \"NewValue\": 60587824,\r\n            \"UserValue\": 60587824,\r\n            \"OldValue\": 34563841,\r\n            \"Coef\": 1,\r\n            \"FormulaId\": null,\r\n            \"SerialId\": 0\r\n        },\r\n        {\r\n            \"SystemCodeDetailId\": 141726,\r\n            \"SystemCodeDetailCodeNumber\": 162,\r\n            \"PreviousCommandDetailId\": 252700,\r\n            \"NewValue\": 11000000,\r\n            \"UserValue\": 11000000,\r\n            \"OldValue\": 11000000,\r\n            \"Coef\": 1,\r\n            \"FormulaId\": null,\r\n            \"SerialId\": 0\r\n        },\r\n        {\r\n            \"SystemCodeDetailId\": 141727,\r\n            \"SystemCodeDetailCodeNumber\": 163,\r\n            \"PreviousCommandDetailId\": null,\r\n            \"NewValue\": null,\r\n            \"UserValue\": 0,\r\n            \"OldValue\": null,\r\n            \"Coef\": 1,\r\n            \"FormulaId\": null,\r\n            \"SerialId\": 0\r\n        },\r\n        {\r\n            \"SystemCodeDetailId\": 141734,\r\n            \"SystemCodeDetailCodeNumber\": 172,\r\n            \"PreviousCommandDetailId\": 252701,\r\n            \"NewValue\": 7078500,\r\n            \"UserValue\": 7078500,\r\n            \"OldValue\": 7078500,\r\n            \"Coef\": 1,\r\n            \"FormulaId\": null,\r\n            \"SerialId\": 0\r\n        },\r\n        {\r\n            \"SystemCodeDetailId\": 141738,\r\n            \"SystemCodeDetailCodeNumber\": 176,\r\n            \"PreviousCommandDetailId\": null,\r\n            \"NewValue\": 0,\r\n            \"UserValue\": 0,\r\n            \"OldValue\": null,\r\n            \"Coef\": 1,\r\n            \"FormulaId\": null,\r\n            \"SerialId\": 0\r\n        },\r\n        {\r\n            \"SystemCodeDetailId\": 141744,\r\n            \"SystemCodeDetailCodeNumber\": 183,\r\n            \"PreviousCommandDetailId\": null,\r\n            \"NewValue\": 0,\r\n            \"UserValue\": 0,\r\n            \"OldValue\": null,\r\n            \"Coef\": 1,\r\n            \"FormulaId\": null,\r\n            \"SerialId\": 0\r\n        },\r\n        {\r\n            \"SystemCodeDetailId\": 141777,\r\n            \"SystemCodeDetailCodeNumber\": 237,\r\n            \"PreviousCommandDetailId\": null,\r\n            \"NewValue\": 0,\r\n            \"UserValue\": 0,\r\n            \"OldValue\": null,\r\n            \"Coef\": 1,\r\n            \"FormulaId\": null,\r\n            \"SerialId\": 0\r\n        },\r\n        {\r\n            \"SystemCodeDetailId\": 141779,\r\n            \"SystemCodeDetailCodeNumber\": 239,\r\n            \"PreviousCommandDetailId\": null,\r\n            \"NewValue\": 0,\r\n            \"UserValue\": 0,\r\n            \"OldValue\": null,\r\n            \"Coef\": 1,\r\n            \"FormulaId\": null,\r\n            \"SerialId\": 0\r\n        },\r\n        {\r\n            \"SystemCodeDetailId\": 141830,\r\n            \"SystemCodeDetailCodeNumber\": 308,\r\n            \"PreviousCommandDetailId\": null,\r\n            \"NewValue\": null,\r\n            \"UserValue\": 0,\r\n            \"OldValue\": null,\r\n            \"Coef\": 1,\r\n            \"FormulaId\": null,\r\n            \"SerialId\": 0\r\n        },\r\n        {\r\n            \"SystemCodeDetailId\": 141844,\r\n            \"SystemCodeDetailCodeNumber\": 322,\r\n            \"PreviousCommandDetailId\": null,\r\n            \"NewValue\": null,\r\n            \"UserValue\": 0,\r\n            \"OldValue\": null,\r\n            \"Coef\": 1,\r\n            \"FormulaId\": null,\r\n            \"SerialId\": 0\r\n        },\r\n        {\r\n            \"SystemCodeDetailId\": 141846,\r\n            \"SystemCodeDetailCodeNumber\": 324,\r\n            \"PreviousCommandDetailId\": null,\r\n            \"NewValue\": null,\r\n            \"UserValue\": 0,\r\n            \"OldValue\": null,\r\n            \"Coef\": 1,\r\n            \"FormulaId\": null,\r\n            \"SerialId\": 0\r\n        }\r\n    ],\r\n    \"ImportedId\": null,\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 0,\r\n    \"StateCode\": 1,\r\n    \"IsDeleted\": false,\r\n    \"OwnerId\": 0,\r\n    \"CreatedBy\": 0,\r\n    \"CreatedOn\": \"2024-01-27T13:00:26.0973788+03:30\",\r\n    \"ModifiedBy\": 0,\r\n    \"ModifiedOn\": \"2024-01-27T13:00:26.0973796+03:30\",\r\n    \"RecGuid\": \"c526c3c8-0365-4f82-bdc6-4c25f28a3610\",\r\n    \"RowVersion\": \"\"\r\n}"
+						},
+						"url": "{{url}}/api/CommandHeader/InsertAsync"
+					},
+					"response": []
+				},
+				{
+					"name": "hokmWorkflowStart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ef594124-3dcf-4703-8d4c-50bc8c80d60b",
+								"exec": [
+									"pm.test(\"status is 200 \",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"hasError is false\",function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false)\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "d2987b6c-34c2-4a18-89e6-0320d1f2989e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzZGZkMmI3MS0wNjMxLTRhZGItOWU2Yi1hNzBiOWJjN2Y2OWQiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDU5MTg0OTIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiJjNmIyZjQzMS04NTE4LTQ4YmItYWM0NC04YzFhMGU5NWFlNWMiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNTkxODQ5MiwiZXhwIjoxNzA1OTM2NDkyLCJhdWQiOiJBbnkifQ.IbxhibB5ZGuF21DI3pgy_MYMzOR-WnrpkpbiCApGryk"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 15,\r\n    \"RecordId\": {{Hokm_id}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"WorkFlowStart\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": []\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}\r\n\r\n\r\n\r\n// {\r\n//     \"EntityId\": 15,\r\n//     \"RecordId\": 77851,\r\n//     \"Factor\": null,\r\n//     \"Bookmark\": \"WorkFlowStart\",\r\n//     \"Paraph\": \"\",\r\n//     \"Parameter\": [],\r\n//     \"SelectedAssignees\": {\r\n//         \"ForInfo\": [],\r\n//         \"ForAction\": []\r\n//     },\r\n//     \"CompanyId\": 117,\r\n//     \"BranchId\": 117\r\n// }"
+						},
+						"url": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction"
+					},
+					"response": []
+				},
+				{
+					"name": "hokmWorkflowConfirm",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "31effc47-cd3b-4e04-9d72-84386cd79874",
+								"exec": [
+									"pm.test(\"status is 200 \",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"hasError is false\",function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false)\r",
+									"\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "466a9723-f240-4241-ba35-27e2c167999c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzZGZkMmI3MS0wNjMxLTRhZGItOWU2Yi1hNzBiOWJjN2Y2OWQiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDU5MTg0OTIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiJjNmIyZjQzMS04NTE4LTQ4YmItYWM0NC04YzFhMGU5NWFlNWMiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNTkxODQ5MiwiZXhwIjoxNzA1OTM2NDkyLCJhdWQiOiJBbnkifQ.IbxhibB5ZGuF21DI3pgy_MYMzOR-WnrpkpbiCApGryk"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 15,\r\n    \"RecordId\": {{Hokm_id}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"Confirm\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": []\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction"
+					},
+					"response": []
+				},
+				{
+					"name": "hokmWorkflowFinalConfirm",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3c6692db-3e51-4b7c-ab32-1efd4424554b",
+								"exec": [
+									"pm.test(\"status is 200 \",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"hasError is false\",function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false)\r",
+									"\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "4622b86a-55c2-4408-87b0-1546eee5f27a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzZGZkMmI3MS0wNjMxLTRhZGItOWU2Yi1hNzBiOWJjN2Y2OWQiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDU5MTg0OTIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiJjNmIyZjQzMS04NTE4LTQ4YmItYWM0NC04YzFhMGU5NWFlNWMiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNTkxODQ5MiwiZXhwIjoxNzA1OTM2NDkyLCJhdWQiOiJBbnkifQ.IbxhibB5ZGuF21DI3pgy_MYMzOR-WnrpkpbiCApGryk"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 15,\r\n    \"RecordId\": {{Hokm_id}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"FinalConfirm\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": []\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction"
+					},
+					"response": []
+				},
+				{
+					"name": "hokm-ReturnToConfirm",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8a2c2a61-d761-4ee6-a2ef-50e41f8c048d",
+								"exec": [
+									"pm.test(\"status is 200 \",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"hasError is false\",function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false)\r",
+									"\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "872f228e-ed34-4e54-9029-580c298e2279",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4M2ZkNzQ2MC0yNmFkLTRkMGMtOTIwNy0xNjA2Yjc3YmFkODUiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDYzNDMwNzgsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiJhYmE3MDAzMS0xZWEwLTRiODctYTliZC1mMjk2YWI0ZjNiNmYiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNjM0MzA3OCwiZXhwIjoxNzA2MzYxMDc4LCJhdWQiOiJBbnkifQ.y996VpqM3nXgbQv7bclocTjHKnr172b-Copw0Z4EWg0"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 15,\r\n    \"RecordId\": {{Hokm_id}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"ReturnToConfirm\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": []\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction"
+					},
+					"response": []
+				},
+				{
+					"name": "hokm-ReturnToStart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9b1c21f4-7d3e-48e1-bf5b-4f7ad176e65c",
+								"exec": [
+									"pm.test(\"status is 200 \",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"hasError is false\",function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false)\r",
+									"\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "ed22c8e8-264a-4f81-8641-80d4cf3571e5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4M2ZkNzQ2MC0yNmFkLTRkMGMtOTIwNy0xNjA2Yjc3YmFkODUiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDYzNDMwNzgsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiJhYmE3MDAzMS0xZWEwLTRiODctYTliZC1mMjk2YWI0ZjNiNmYiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNjM0MzA3OCwiZXhwIjoxNzA2MzYxMDc4LCJhdWQiOiJBbnkifQ.y996VpqM3nXgbQv7bclocTjHKnr172b-Copw0Z4EWg0"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 15,\r\n    \"RecordId\": {{Hokm_id}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"ReturnToStart\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": []\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete-hokm",
+					"id": "377c4195-95cf-4f24-9d36-583c3c4ad38d",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1OTkxMzYzNi01NWJjLTRmOTAtOTE5Zi04OGU4M2JlY2VlMjUiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDY0MjM3NTksImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiIzYzA0NzRjMS1kNzZiLTRjMmQtOTY5ZC1iY2EyYTczMjkzMjAiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNjQyMzc1OSwiZXhwIjoxNzA2NDQxNzU5LCJhdWQiOiJBbnkifQ.BPs837sKjAsv3Bq1DK3Oq9Z3mRVpfaExOo1V2EfqOWs"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "HR.Command.Command.Header"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"url": "http://172.31.31.5:1014/api/CommandHeader/DeleteAsync/{{Hokm_id}}"
+					},
+					"response": []
+				}
+			],
+			"id": "231d23b1-7657-4781-b14e-eaf054bd5953",
+			"description": "صدور حکم از نوع استخدام مجدد ( برگشت به کار ) برای پرسنل شماره 10 و در نهایت حذف آن"
+		},
+		{
+			"name": "Delete-OrganizationTreeAndJob",
+			"item": [
+				{
+					"name": "Delete-OrganizationTree",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2fa9fbe6-57fd-4a21-bfb7-f6e18535f1d4",
+								"exec": [
+									"pm.test(\"status is 200\",function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"hasError is false \",function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "edc182e9-bcda-4e0c-a6b0-b22aef2f18d6",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1OTkxMzYzNi01NWJjLTRmOTAtOTE5Zi04OGU4M2JlY2VlMjUiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDY0MjM3NTksImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiIzYzA0NzRjMS1kNzZiLTRjMmQtOTY5ZC1iY2EyYTczMjkzMjAiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNjQyMzc1OSwiZXhwIjoxNzA2NDQxNzU5LCJhdWQiOiJBbnkifQ.BPs837sKjAsv3Bq1DK3Oq9Z3mRVpfaExOo1V2EfqOWs"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "HR.Tree.OrganizationTree.Header"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"url": "http://172.31.31.5:1014/api/Organization/DeleteAsync/{{OrganizationTree_id}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete-job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "503125fa-bdc3-40ba-93ea-c8140b8bce01",
+								"exec": [
+									"pm.test(\"status is 200\",function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"hasError is false \",function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "359021bd-7150-468d-ac16-a7495ff4cae7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1OTkxMzYzNi01NWJjLTRmOTAtOTE5Zi04OGU4M2JlY2VlMjUiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDY0MjM3NTksImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiIzYzA0NzRjMS1kNzZiLTRjMmQtOTY5ZC1iY2EyYTczMjkzMjAiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNjQyMzc1OSwiZXhwIjoxNzA2NDQxNzU5LCJhdWQiOiJBbnkifQ.BPs837sKjAsv3Bq1DK3Oq9Z3mRVpfaExOo1V2EfqOWs"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "HR.Job.JobHeader.Header"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"url": "http://172.31.31.5:1014/api/JobHeader/DeleteAsync/{{job_id}}"
+					},
+					"response": []
+				}
+			],
+			"id": "cd8ac3f9-411e-4088-9717-2cbcb27b44d4",
+			"description": "بعد از حذف حکم ، دختواره و شغل آن در این فولدر حذف می شود ."
+		},
+		{
+			"name": "issueContract",
+			"item": [
+				{
+					"name": "InsertContract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "7bf8e62b-3cef-4ba4-a41f-4e80ef4a65f1",
+								"exec": [
+									"pm.test(\"status is 200 \",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"hasError is false ?\",function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false)\r",
+									"\r",
+									"})\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"\",function(){\r",
+									"    pm.expect((pm.response.json()).friendlyMessages[0].message).to.eql(\"ركورد با موفقیت ثبت شد\")\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.collectionVariables.set(\"contract_id\",pm.response.json().id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "1bbd6a6d-d958-40b0-9b12-8ab5c6a302d5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Access-Control-Request-Headers",
+								"value": "authorization,content-type,res-type,sub_system"
+							},
+							{
+								"key": "Access-Control-Request-Method",
+								"value": "POST"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzNmFlYmU1OS1mZTMyLTRkNzAtYjNjYi0xMzg2YmMxOTA3YjciLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDYzMzAzOTYsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI3Yzc1Yjc1ZS0zYWMyLTQ4YjctOTQ3OS1mYjJkMjE4MWFhOWMiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNjMzMDM5NiwiZXhwIjoxNzA2MzQ4Mzk2LCJhdWQiOiJBbnkifQ.ugKOwpzMhsw8odVTURXJe5306gynoVxPM3iEGt0ZvaY"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Res-Type",
+								"value": "HR.Contract.IssueContract"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\": 0,\r\n    \"employeeId\": 14,\r\n    \"employeeIdName\": \"پرسنل شماره 12\",\r\n    \"contractTypeCodeName\": null,\r\n    \"contractTypeCode\": 1,\r\n    \"contractStatusCode\": 1,\r\n    \"workTypeCode\": null,\r\n    \"issueDate\": \"{{current_Date}}\",\r\n    \"startDate\": \"2024-03-20T00:00:00\",\r\n    \"endDate\": \"2025-03-20\",\r\n    \"contractTrack\": null,\r\n    \"commandHeaderId\": 77871,\r\n    \"commandTrack\": \"1402/12/1\",\r\n    \"baseSalaryAmount\": 21710792,\r\n    \"benefitAmount\": 30616568,\r\n    \"duration\": 366,\r\n    \"isContractGiven\": false,\r\n    \"SubSystemId\": 1,\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117,\r\n    \"StateCode\": 1,\r\n    \"IsDeleted\": false,\r\n    \"OwnerId\": 647,\r\n    \"CreatedBy\": 647,\r\n    \"CreatedOn\": \"2020-12-14T15:29:13.9066667\",\r\n    \"ModifiedBy\": 647,\r\n    \"ModifiedOn\": \"2020-12-14T15:29:13.9066667\",\r\n    \"RecGuid\": \"c01d90ed-e4d3-498f-91e1-651b10325766\",\r\n    \"RowVersion\": \"AAAAAHR0zZA=\"\r\n}"
+						},
+						"url": "{{url}}/api/Contract/InsertAsync"
+					},
+					"response": []
+				},
+				{
+					"name": "contractoWorkflow-SendForConfirm",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "406c266f-2dac-4d70-a462-49a5407f6567",
+								"exec": [
+									"pm.test(\"status is 200 \",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"hasError is false\",function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false)\r",
+									"\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "1c25bca1-bf95-414e-8fa8-7086dde4f1d1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzNmFlYmU1OS1mZTMyLTRkNzAtYjNjYi0xMzg2YmMxOTA3YjciLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDYzMzAzOTYsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI3Yzc1Yjc1ZS0zYWMyLTQ4YjctOTQ3OS1mYjJkMjE4MWFhOWMiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNjMzMDM5NiwiZXhwIjoxNzA2MzQ4Mzk2LCJhdWQiOiJBbnkifQ.ugKOwpzMhsw8odVTURXJe5306gynoVxPM3iEGt0ZvaY"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 56,\r\n    \"RecordId\": {{contract_id}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"SendForConfirm\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": []\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction"
+					},
+					"response": []
+				},
+				{
+					"name": "contractWorkflow-FinalConfirm",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d565f5b5-9e2d-455b-8f26-b9f7c6465248",
+								"exec": [
+									"pm.test(\"status is 200 \",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"hasError is false\",function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false)\r",
+									"\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "851671b8-66b8-43b5-9a1e-7fa4afdae115",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzNmFlYmU1OS1mZTMyLTRkNzAtYjNjYi0xMzg2YmMxOTA3YjciLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDYzMzAzOTYsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI3Yzc1Yjc1ZS0zYWMyLTQ4YjctOTQ3OS1mYjJkMjE4MWFhOWMiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNjMzMDM5NiwiZXhwIjoxNzA2MzQ4Mzk2LCJhdWQiOiJBbnkifQ.ugKOwpzMhsw8odVTURXJe5306gynoVxPM3iEGt0ZvaY"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 56,\r\n    \"RecordId\": {{contract_id}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"FinalConfirm\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": []\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction"
+					},
+					"response": []
+				},
+				{
+					"name": "contract-return-ReturnFromConfirm",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b6457bb4-9594-499c-a8c0-f33802729f69",
+								"exec": [
+									"pm.test(\"status is 200 \",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"hasError is false\",function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false)\r",
+									"\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "88fe6178-92b6-49e3-b0bc-80861f7ab22f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZGQ5NWIwOC0wM2ZiLTQ0YzItYTI3ZS1hNTgxODQ5OTMyOTMiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDYzMzk1NTYsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI4NWZjMjk5NS0yZjkxLTQ3ZDAtYmJmYi1kZDcxMTEwYWRmMzkiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNjMzOTU1NiwiZXhwIjoxNzA2MzU3NTU2LCJhdWQiOiJBbnkifQ.7QMooIPQ632OKp90lytIqcbOAsPlSMUeRbtgk3rfr9U"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 56,\r\n    \"RecordId\": {{contract_id}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"ReturnFromConfirm\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": []\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction"
+					},
+					"response": []
+				},
+				{
+					"name": "cntract-return-Review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8a243cb9-509e-42ba-b006-1d2c81798fdb",
+								"exec": [
+									"pm.test(\"status is 200 \",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"hasError is false\",function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false)\r",
+									"\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "a50a1a05-e62e-49e1-893a-e83ca679d698",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZGQ5NWIwOC0wM2ZiLTQ0YzItYTI3ZS1hNTgxODQ5OTMyOTMiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDYzMzk1NTYsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI4NWZjMjk5NS0yZjkxLTQ3ZDAtYmJmYi1kZDcxMTEwYWRmMzkiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNjMzOTU1NiwiZXhwIjoxNzA2MzU3NTU2LCJhdWQiOiJBbnkifQ.7QMooIPQ632OKp90lytIqcbOAsPlSMUeRbtgk3rfr9U"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 56,\r\n    \"RecordId\": {{contract_id}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"Review\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": []\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction"
+					},
+					"response": []
+				},
+				{
+					"name": "delete-contract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c64beca1-74b6-4694-b2ca-6bdbee62b078",
+								"exec": [
+									"pm.test(\"status is 200 \",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"});\r",
+									"\r",
+									"pm.test(\"hasError is false\",function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false)\r",
+									"\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "ec6f83c4-f788-4971-9918-6fc7becde40c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxZmExNTM5My1mYzBmLTQ5MmEtOTIxOC03OGY4OTgwMzk0MDUiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDYzNTM2MDAsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI4Zjk0MTA1Yi1hMzQwLTQ3MzctYmRlNy0zZThiOTZiNTVhOGMiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNjM1MzYwMCwiZXhwIjoxNzA2MzcxNjAwLCJhdWQiOiJBbnkifQ.mDdbLUaKMdtlf_LAktLU2LUK7FzURqqK27FjeMQk87M"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "HR.Contract.ReviewContract.Grid.Header"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"url": "http://172.31.31.5:1014/api/Contract/DeleteAsync/{{contract_id}}"
+					},
+					"response": []
+				}
+			],
+			"id": "794ffd3d-0e0c-44a4-b1a8-e4b203c6321d",
+			"description": "صدور قرار داد و تایید آن برای پرسنل شماره 12 و تغییر گردش کار آن و در نهایت حذف قرارداد"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "503d2fad-0af9-4f4b-a7fc-e2c1028c4e02",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "34c2039a-85ee-4251-b2e1-8e8170ca44ca",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://172.31.31.5:1014",
+			"type": "string"
+		},
+		{
+			"key": "username",
+			"value": "Qc user1",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "123Qaz?",
+			"type": "string"
+		},
+		{
+			"key": "Token",
+			"value": ""
+		},
+		{
+			"key": "job_id",
+			"value": ""
+		},
+		{
+			"key": "OrganizationTree_id",
+			"value": ""
+		},
+		{
+			"key": "Unit_Id",
+			"value": ""
+		},
+		{
+			"key": "parentOrganizationUnitId",
+			"value": ""
+		},
+		{
+			"key": "variableNumber",
+			"value": ""
+		},
+		{
+			"key": "variableName",
+			"value": ""
+		},
+		{
+			"key": "Job_number",
+			"value": ""
+		},
+		{
+			"key": "version",
+			"value": ""
+		},
+		{
+			"key": "current_Date",
+			"value": ""
+		},
+		{
+			"key": "post_Id",
+			"value": ""
+		},
+		{
+			"key": "Hokm_id",
+			"value": ""
+		},
+		{
+			"key": "contract_id",
+			"value": ""
+		},
+		{
+			"key": "Employee_id",
+			"value": ""
+		},
+		{
+			"key": "rowVersion",
+			"value": ""
+		},
+		{
+			"key": "party_id",
+			"value": ""
+		}
+	]
+}
