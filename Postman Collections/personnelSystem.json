@@ -1796,6 +1796,20 @@
 				},
 				{
 					"name": "Delete-hokm",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4cdc9b58-77d6-4191-a768-fa0b9c5fcd4a",
+								"exec": [
+									"pm.test(\"status is 200\",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"id": "377c4195-95cf-4f24-9d36-583c3c4ad38d",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
