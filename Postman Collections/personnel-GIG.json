@@ -2048,7 +2048,7 @@
 									"    pm.response.to.have.status(200)\r",
 									"});\r",
 									"\r",
-									"pm.test(\"hasError is false\",function(){\r",
+									"pm.test(\"hasError is false ?\",function(){\r",
 									"    pm.expect((pm.response.json()).hasError).to.eql(false)\r",
 									"\r",
 									"})\r",
