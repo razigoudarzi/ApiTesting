@@ -936,6 +936,101 @@
 					"response": []
 				},
 				{
+					"name": "Employee/UpdateAsync",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b37cfcad-085b-493e-8383-57aad5b02075",
+								"exec": [
+									"pm.test(\"status is 200 \",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"hasError is false\",function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false)\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "1c8fdd1e-b9c2-4443-ba0b-2b0cc88f8841",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MjY3NGVhYi1jMDNiLTQ4NWEtOGM0NC1iMmRmMzU1MjJjNTUiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDg0OTMzOTQsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNywxMzksNDQ1IiwidG9rZW5JZCI6IjBlYzg3NTY2LTgzNmItNDVlMi05NGEzLTEyOTU3YjY0NTM2NCIsImlzQWRtaW4iOiJUcnVlIiwibmJmIjoxNzA4NDkzMzk0LCJleHAiOjE3MDg1MTEzOTQsImF1ZCI6IkFueSJ9.Q_ClaPaYHHgDoRlAZPRY0qzjP1xzwgFXloUKAsjTnEE"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "HR.Employee.EmployeeGrid.Header"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Mobile Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nationalityNumber\": \"8074314189\",\r\n    \"applicantId\": null,\r\n    \"foreignNationalityNumber\": null,\r\n    \"employeeNumber\": 140208,\r\n    \"certificateNumber\": \"450\",\r\n    \"firstName\": \"مریم\",\r\n    \"hasForeignNationality\": false,\r\n    \"lastName\": \"حیدری\",\r\n    \"nickname\": null,\r\n    \"friendlyName\": null,\r\n    \"fatherName\": \"علی\",\r\n    \"birthDate\": \"1990-04-23T00:00:00\",\r\n    \"realBirthDate\": \"1990-04-23T00:00:00\",\r\n    \"certificateDate\": \"1990-04-23T00:00:00\",\r\n    \"birthLocationCityId\": 10474,\r\n    \"certificateLocationCityId\": 10474,\r\n    \"healthStatusCode\": 1,\r\n    \"religionCode\": 1,\r\n    \"religionBranchCode\": 1,\r\n    \"repurchaseDate\": \"2024-02-21T00:00:00\",\r\n    \"employmentDate\": \"2024-02-21T00:00:00\",\r\n    \"confirmFirstEmploymentDate\": \"2024-02-21T00:00:00\",\r\n    \"firstEmploymentDate\": \"2024-02-21T00:00:00\",\r\n    \"insuranceTypeCode\": null,\r\n    \"houseStatusCode\": null,\r\n    \"rentAmount\": null,\r\n    \"mortgageAmount\": null,\r\n    \"marriageStatusCode\": null,\r\n    \"genderCode\": 2,\r\n    \"nationalityCountryId\": 400,\r\n    \"citizenCountryId\": 400,\r\n    \"necessaryPhone\": \"0238887\",\r\n    \"mobile\": \"09365355763\",\r\n    \"exemptionCode\": null,\r\n    \"bloodGroupCode\": null,\r\n    \"treatyRowNumber\": \"TEST KIA\",\r\n    \"insuranceBookNumber\": null,\r\n    \"workCertificationNo\": null,\r\n    \"insuranceNumber\": null,\r\n    \"email\": null,\r\n    \"personalEmail\": null,\r\n    \"costCenterPartyId\": null,\r\n    \"costCenterGroupCode\": null,\r\n    \"acceptableHistory\": false,\r\n    \"isProductionWorker\": null,\r\n    \"insuranceBranchId\": null,\r\n    \"taxBranchId\": null,\r\n    \"cardNumber\": null,\r\n    \"repurchaseCoef\": null,\r\n    \"description\": null,\r\n    \"partyAccountId\": null,\r\n    \"kouroshPartyAccountId\": null,\r\n    \"certificateSerialFirstPartCode\": 0,\r\n    \"certificateSerialSecondPart\": null,\r\n    \"certificateSerialThirdPart\": null,\r\n    \"isReplica\": false,\r\n    \"isTransfered\": null,\r\n    \"Id\": {{Employee_id}},\r\n    \"SubSystemId\": 1,\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 0,\r\n    \"StateCode\": 2,\r\n    \"IsDeleted\": false,\r\n    \"OwnerId\": 1105,\r\n    \"CreatedBy\": 1105,\r\n    \"CreatedOn\": \"2024-02-21T11:05:20.99\",\r\n    \"ModifiedBy\": 1105,\r\n    \"ModifiedOn\": \"2024-02-21T11:06:20.2566667\",\r\n    \"RecGuid\": \"3a49cf9f-c59e-4f11-bb99-bc2e23e33758\",\r\n    \"RowVersion\": \"{{rowVersion}}\",\r\n    \"bourseNumber\": \"100\",\r\n    \"sajamNumber\": \"100\"\r\n}"
+						},
+						"url": "http://172.31.31.5:1014/api/Employee/UpdateAsync"
+					},
+					"response": []
+				},
+				{
 					"name": "InsertAddress",
 					"event": [
 						{
