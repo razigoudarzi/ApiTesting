@@ -840,6 +840,27 @@
 				},
 				{
 					"name": "Employee/GetAllAsync/",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "353358d0-cfe4-469c-b37c-634d5415c03c",
+								"exec": [
+									"pm.test(\"status is 200 \",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"pm.test(\"hasError is false\",function(){\r",
+									"    pm.expect((pm.response.json()).hasError).to.eql(false)\r",
+									"})\r",
+									"\r",
+									"//set variable\r",
+									"pm.collectionVariables.set(\"rowVersion\",pm.response.json().data[0].rowVersion)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"id": "79f873b2-8974-44b8-be17-67b162cd3e71",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
