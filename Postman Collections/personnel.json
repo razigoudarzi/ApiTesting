@@ -839,6 +839,82 @@
 					"response": []
 				},
 				{
+					"name": "Employee/GetAllAsync/",
+					"id": "79f873b2-8974-44b8-be17-67b162cd3e71",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{Token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9,fa;q=0.8"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3MjY3NGVhYi1jMDNiLTQ4NWEtOGM0NC1iMmRmMzU1MjJjNTUiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDg0OTMzOTQsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNywxMzksNDQ1IiwidG9rZW5JZCI6IjBlYzg3NTY2LTgzNmItNDVlMi05NGEzLTEyOTU3YjY0NTM2NCIsImlzQWRtaW4iOiJUcnVlIiwibmJmIjoxNzA4NDkzMzk0LCJleHAiOjE3MDg1MTEzOTQsImF1ZCI6IkFueSJ9.Q_ClaPaYHHgDoRlAZPRY0qzjP1xzwgFXloUKAsjTnEE"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "DNT",
+								"value": "1"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "HR.Employee.EmployeeGrid.Header"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Hr"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Mobile Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pageMeta\": {\r\n        \"currentPage\": 1,\r\n        \"perPage\": 20,\r\n        \"hasTotalSummarization\": false\r\n    },\r\n    \"filters\": {},\r\n    \"sortMeta\": [],\r\n    \"fastFilter\": \"140208\",\r\n    \"isWholeCompanies\": false,\r\n    \"companies\": [],\r\n    \"transactionYearMonth\": null,\r\n    \"employeeIdList\": [],\r\n    \"showAll\": 1\r\n}"
+						},
+						"url": "http://172.31.31.5:1014/api/Employee/GetAllAsync/"
+					},
+					"response": []
+				},
+				{
 					"name": "InsertAddress",
 					"event": [
 						{
