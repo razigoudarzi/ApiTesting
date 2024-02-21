@@ -1026,6 +1026,32 @@
 				},
 				{
 					"name": "InsertEducation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ae86a7c2-b326-44a7-be4a-ee4c08fa08e0",
+								"exec": [
+									"pm.test(\"status code is 200\",function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"hasError is false ?\", function(){\r",
+									"\r",
+									"pm.expect((pm.response.json()).hasError).to.eql(false);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"message ?\", function(){\r",
+									"    pm.expect((pm.response.json()).friendlyMessages[0].message).to.eql(\"ركورد با موفقیت ثبت شد\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"id": "ed836452-7d3a-4ff5-b257-2ade788d484c",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
