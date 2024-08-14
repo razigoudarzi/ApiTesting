@@ -1,0 +1,4682 @@
+{
+	"info": {
+		"_postman_id": "067376bb-f93b-47b6-8e3e-40c337ec68f2",
+		"name": "QC_ForeignOrder_021205",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11235084",
+		"_collection_link": "https://red-desert-745599.postman.co/workspace/test~ae88a582-f495-4a05-b726-7d85df4a1d7b/collection/11235084-067376bb-f93b-47b6-8e3e-40c337ec68f2?action=share&source=collection_link&creator=11235084"
+	},
+	"item": [
+		{
+			"name": "Normal Purchase Request",
+			"item": [
+				{
+					"name": "login_ForeignOrder",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.globals.set(\"_authforeign\", response.data.token);\r",
+									"\r",
+									"\r",
+									"\r",
+									"//pm.test(\"Successful Get Company\", function () {\r",
+									"  //  pm.expect(response.data.defaultCompany).to.eql(139);\r",
+									"    \r",
+									"//});\r",
+									"\r",
+									"var moment = require('moment');\r",
+									"pm.globals.set('_todayTime', moment().format((\"YYYY-MM-DDTHH:mm:ss\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer null"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Qc user1\",\r\n    \"password\": \"123Qaz?\",\r\n    \"defaultLanguage\": 1\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1001/api/account/login",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1001",
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create_purchaseRequest_Header",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.globals.set(\"_idPurchaseRequestHeader\", response.data.id);\r",
+									"pm.globals.set(\"_purchaseRequestNumber\", response.data.purchaseRequestNumber);\r",
+									"\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Successful Registeration Header Purchase Request Normal\", function () {\r",
+									"    pm.expect(response.friendlyMessages[0].message).to.eql(\"ركورد با موفقیت ثبت شد\");\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4MGIyNTBmYy0zZmE1LTQ5MzktOTVjOS1jNDMzZTk3MWViYmQiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDE2MDM3NTMsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI1NmMzNDk1NS0zNTQxLTRiZTEtOTY1NC1mMzU0YmFkYzVhOWYiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwMTYwMzc1MywiZXhwIjoxNzAxNjIxNzUzLCJhdWQiOiJBbnkifQ.zeKjsU0jxsJsWbXT5lVZGEaiUOJow0pYMLVssNRClIc"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.operation.purchaseRequestHeader"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"checked\": false,\r\n    \"purchaseRequestDate\": \"{{_todayTime}}\",\r\n    \"purchaseRequestHeaderStatusCodeName\": \"پیش نویس\",\r\n    \"purchaseRequestHeaderStatusCode\": 1,\r\n    \"purchaseRequestTypeCode\": 1,\r\n    \"purchaseRequestNumber\": \"PR1402000773\",\r\n    \"requestCategoryIdName\": \"طبقه بندی مستوری\",\r\n    \"requestCategoryId\": 38,\r\n    \"goodTypeUsageCode\": 3,\r\n    \"goodTypeUsageCodeName\": \"هردو\",\r\n    \"partyOneId\": 14929,\r\n    \"partyOneIdName\": \"اشتهارد - مدیریت کارخانه _ 76\"\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseRequestHeader/InsertAsync/",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseRequestHeader",
+								"InsertAsync",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create_purchaseRequest_Detail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.globals.set(\"_idPurchaseRequestDetail\", response.data.id);\r",
+									"\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Successful Registeration Detail Purchase Request Normal\", function () {\r",
+									"    pm.expect(response.friendlyMessages[0].message).to.eql(\"ركورد با موفقیت ثبت شد\");\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4MGIyNTBmYy0zZmE1LTQ5MzktOTVjOS1jNDMzZTk3MWViYmQiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDE2MDM3NTMsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI1NmMzNDk1NS0zNTQxLTRiZTEtOTY1NC1mMzU0YmFkYzVhOWYiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwMTYwMzc1MywiZXhwIjoxNzAxNjIxNzUzLCJhdWQiOiJBbnkifQ.zeKjsU0jxsJsWbXT5lVZGEaiUOJow0pYMLVssNRClIc"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.operation.purchaseRequestHeader.purchaseRequestDetail"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"checked\": false,\r\n    \"goodTypeCodeName\": \"کالا\",\r\n    \"goodTypeCode\": 1,\r\n    \"purchaseRequestDetailStatusCodeName\": \"پیش نویس\",\r\n    \"purchaseRequestDetailStatusCode\": 1,\r\n    \"requiredDate\": \"{{_todayTime}}\",\r\n    \"purchaseRequestHeaderId\": {{_idPurchaseRequestHeader}},\r\n    \"productId\": 10613,\r\n    \"productIdName\": \"(5001001000) سدیم لوریل اتر سولفات %70 (SLES)\",\r\n    \"measureUnitId\": 6,\r\n    \"measureUnitIdName\": \"كيلوگرم\",\r\n    \"amount\": \"1000\"\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseRequestDetail/InsertAsync/",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseRequestDetail",
+								"InsertAsync",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WorkFlow_WorkFlowAtion_Confirm",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4MGIyNTBmYy0zZmE1LTQ5MzktOTVjOS1jNDMzZTk3MWViYmQiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDE2MDM3NTMsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI1NmMzNDk1NS0zNTQxLTRiZTEtOTY1NC1mMzU0YmFkYzVhOWYiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwMTYwMzc1MywiZXhwIjoxNzAxNjIxNzUzLCJhdWQiOiJBbnkifQ.zeKjsU0jxsJsWbXT5lVZGEaiUOJow0pYMLVssNRClIc"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 11,\r\n    \"RecordId\": {{_idPurchaseRequestHeader}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"WorkFlowStart\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": [\r\n            1105\r\n        ]\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1030",
+							"path": [
+								"api",
+								"StateMachineManager",
+								"WorkflowAction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WorkFlow_WorkFlowAtion_Confirm2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4MGIyNTBmYy0zZmE1LTQ5MzktOTVjOS1jNDMzZTk3MWViYmQiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDE2MDM3NTMsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI1NmMzNDk1NS0zNTQxLTRiZTEtOTY1NC1mMzU0YmFkYzVhOWYiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwMTYwMzc1MywiZXhwIjoxNzAxNjIxNzUzLCJhdWQiOiJBbnkifQ.zeKjsU0jxsJsWbXT5lVZGEaiUOJow0pYMLVssNRClIc"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 11,\r\n    \"RecordId\": {{_idPurchaseRequestHeader}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"Confirm1\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": [\r\n            1105\r\n        ]\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1030",
+							"path": [
+								"api",
+								"StateMachineManager",
+								"WorkflowAction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WorkFlow_WorkFlowAction_Inquiry",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4MzViNTI2My1jZTRkLTQ0YTMtYjI1OC1hODI0ZmJjMDRkOWEiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDc3MzU3MzEsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNywxMzksNDQ1IiwidG9rZW5JZCI6IjBkOWMxMDc2LWY5NTAtNDkwMS04NTQzLWM3N2FjNGM0OWU0OCIsImlzQWRtaW4iOiJUcnVlIiwibmJmIjoxNzA3NzM1NzMxLCJleHAiOjE3MDc3NTM3MzEsImF1ZCI6IkFueSJ9.i87_bwgxr-GUfZJ7K80kx8JRP6d-Au45iEv8qUkJ35U"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Mobile Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 21,\r\n    \"RecordId\": {{_idPurchaseRequestDetail}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"Inquiry\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": []\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1030",
+							"path": [
+								"api",
+								"StateMachineManager",
+								"WorkflowAction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_purchasePlan",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"pm.globals.set(\"_number\", response.data.number);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI2MzY1ZGIwNS0zYmE3LTQ1MzEtYjI1NS05ZmQ0MWU4NTQ0ZGQiLCJpc3MiOiJBbnkiLCJpYXQiOjE2NDkyMzQ4MDYsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiODEzIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ItmF2LPYqtmI2LHbjCIsIkRpc3BsYXlOYW1lIjoi2YXYs9iq2YjYsduMIiwidXNlcklkIjoiODEzIiwiY29tcGFueUlkIjoiMTM5IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTM5IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjEzOSw0NDUiLCJ0b2tlbklkIjoiYjBkNzFjMzktZjg1MS00NzQxLWE4MmEtNDg5MWE4NTk4MTY1IiwiaXNBZG1pbiI6IkZhbHNlIiwibmJmIjoxNjQ5MjM0ODA2LCJleHAiOjE2NDkyNTI4MDYsImF1ZCI6IkFueSJ9.Viyjoc51JLa6VMyYXD0966euCnzcWJ8N57cOu5zzWg0"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.0.156:4326"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.0.156:4326/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.purchasePlan.purchaseRequestHeaderDetail"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36"
+							}
+						],
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseRequestHeaderDetail/getbyidasync/{{_idPurchaseRequestDetail}}",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseRequestHeaderDetail",
+								"getbyidasync",
+								"{{_idPurchaseRequestDetail}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "ایجاد درخواست خرید عادی در سطح هدر و دیتیل و تغییر وضعیت ان به استعلام"
+		},
+		{
+			"name": "Inquiry",
+			"item": [
+				{
+					"name": "login_ForeignOrder",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.globals.set(\"_authforeign\", response.data.token);\r",
+									"\r",
+									"\r",
+									"\r",
+									"//pm.test(\"Successful Get Company\", function () {\r",
+									"  //  pm.expect(response.data.defaultCompany).to.eql(139);\r",
+									"    \r",
+									"//});\r",
+									"\r",
+									"var moment = require('moment');\r",
+									"pm.globals.set('_todayTime', moment().format((\"YYYY-MM-DDTHH:mm:ss\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer null"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Qc user1\",\r\n    \"password\": \"123Qaz?\",\r\n    \"defaultLanguage\": 1\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1001/api/account/login",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1001",
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE_PurchaseInquiry_Header",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.globals.set(\"_idPurchaseInquiryHeader\", response.data.id);\r",
+									"\r",
+									"\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Successful Registeration Header Purchase Inqury\", function () {\r",
+									"    pm.expect(response.friendlyMessages[0].message).to.eql(\"ركورد با موفقیت ثبت شد\");\r",
+									"    \r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4MGIyNTBmYy0zZmE1LTQ5MzktOTVjOS1jNDMzZTk3MWViYmQiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDE2MDM3NTMsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI1NmMzNDk1NS0zNTQxLTRiZTEtOTY1NC1mMzU0YmFkYzVhOWYiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwMTYwMzc1MywiZXhwIjoxNzAxNjIxNzUzLCJhdWQiOiJBbnkifQ.zeKjsU0jxsJsWbXT5lVZGEaiUOJow0pYMLVssNRClIc"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.inquiry.purchaseInquiry"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"checked\": false,\r\n    \"purchaseTypeCode\": 2,\r\n    \"inquiryDate\": \"{{_todayTime}}\",\r\n    \"numberOfInquiries\": 2,\r\n    \"goodTypeUsageCode\": 3,\r\n    \"goodTypeUsageCodeName\": \"هردو\",\r\n    \"purchaseExpertPartyIdName\": \"کاربر QC\",\r\n    \"purchaseInquiryHeaderStatusCode\": 1,\r\n    \"purchaseInquiryHeaderStatusCodeName\": \"پیش نویس\",\r\n    \"isJustSpecificSuppliers\": false,\r\n   // \"purchaseInquiryNumber\": \"IQ14020117000947\",\r\n    \"expiryDate\": \"{{_todayTime}}\",\r\n    \"purchaseTeamId\": 13,\r\n    \"purchaseTeamIdName\": \"تیم خرید مستوری\"\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseInquiryHeader/InsertForeignAsync",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseInquiryHeader",
+								"InsertForeignAsync"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE_PurchaseInquiry_Detail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    var response = pm.response.json();\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.globals.set(\"_idPurchaseInquiryDetail\", response.data.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4MGIyNTBmYy0zZmE1LTQ5MzktOTVjOS1jNDMzZTk3MWViYmQiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDE2MDM3NTMsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI1NmMzNDk1NS0zNTQxLTRiZTEtOTY1NC1mMzU0YmFkYzVhOWYiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwMTYwMzc1MywiZXhwIjoxNzAxNjIxNzUzLCJhdWQiOiJBbnkifQ.zeKjsU0jxsJsWbXT5lVZGEaiUOJow0pYMLVssNRClIc"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.inquiry.purchaseInquiryDetail"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"checked\": false,\r\n    \"goodTypeCode\": 1,\r\n    \"goodTypeCodeName\": \"کالا\",\r\n    \"purchaseInquiryDetailStatusCode\": 1,\r\n    \"purchaseInquiryDetailStatusCodeName\": \"پیش نویس\",\r\n    \"PurchaseInquiryHeaderId\": {{_idPurchaseInquiryHeader}},\r\n    \"needDate\": \"{{_todayTime}}\",\r\n    \"productId\": 10613,\r\n    \"productIdName\": \"سدیم لوریل اتر سولفات %70 (SLES)\",\r\n    \"purchaseRequestDetailIdName\": \"{{_number}}\",\r\n    \"purchaseRequestDetailId\": {{_idPurchaseRequestDetail}},\r\n    \"amount\": \"1000\",\r\n    \"measureUnitId\": 6,\r\n    \"measureUnitIdName\": \"كيلوگرم\"\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseInquiryDetail/InsertForeignAsync",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseInquiryDetail",
+								"InsertForeignAsync"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE_TermsOfPurchase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    var response = pm.response.json();\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiY2E2ODU0Yy1mYzJhLTQ0NjktOTU5Yi1kM2Y3OThlNzc1NDEiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDY1OTMxNzMsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI2MGE2ZmY3Yy05NjVhLTRhNjItYmQyYS0yYzY4NThmMDg0NTYiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNjU5MzE3MywiZXhwIjoxNzA2NjExMTczLCJhdWQiOiJBbnkifQ.d-rL4TpyXt43VztFFWqeSN5dG1kgiPS9FWbTdcbUQWY"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.inquiry.purchaseInquiry"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currencyId\": null,\r\n    \"paymentTypeId\": null,\r\n    \"deliveryCityId\": null,\r\n    \"deliveryCustomsId\": null,\r\n    \"purchaseOrderHeaderId\": null,\r\n    \"purchaseInquiryHeaderId\": {{_idPurchaseInquiryHeader}},\r\n    \"incotermId\": 1\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseInquiryCondition/InsertAsync",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseInquiryCondition",
+								"InsertAsync"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WorkFlow_WorkFlowAtion_Confirm",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"var response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiY2E2ODU0Yy1mYzJhLTQ0NjktOTU5Yi1kM2Y3OThlNzc1NDEiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDY1OTMxNzMsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI2MGE2ZmY3Yy05NjVhLTRhNjItYmQyYS0yYzY4NThmMDg0NTYiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNjU5MzE3MywiZXhwIjoxNzA2NjExMTczLCJhdWQiOiJBbnkifQ.d-rL4TpyXt43VztFFWqeSN5dG1kgiPS9FWbTdcbUQWY"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 10,\r\n    \"RecordId\": {{_idPurchaseInquiryHeader}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"Confirm\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": []\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1030",
+							"path": [
+								"api",
+								"StateMachineManager",
+								"WorkflowAction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WorkFlow_WorkFlowAction_FromConfirmToApprove",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"var response = pm.response.json();\r",
+									"\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1OGVmZDQzNS0xMWQxLTRhMTMtOWQ3MC00OTUxODk5YTY3ODkiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDcxMzI1OTYsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiIwNDVhNDExOC05NDg0LTRlYzYtOWI0ZS0zYzA2ZDhkYTc3Y2YiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNzEzMjU5NiwiZXhwIjoxNzA3MTUwNTk2LCJhdWQiOiJBbnkifQ.JWdeIi7nhBGqV5DA9ZvW1vxfmqnwVv-Hm_XW6QpV-q0"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 10,\r\n    \"RecordId\": {{_idPurchaseInquiryHeader}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"Confirm\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": []\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1030",
+							"path": [
+								"api",
+								"StateMachineManager",
+								"WorkflowAction"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "ایجاد استعلام و تغییر وضعیت ان به تصویب"
+		},
+		{
+			"name": "proforma",
+			"item": [
+				{
+					"name": "login_ForeignOrder",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.globals.set(\"_authforeign\", response.data.token);\r",
+									"\r",
+									"\r",
+									"\r",
+									"//pm.test(\"Successful Get Company\", function () {\r",
+									"  //  pm.expect(response.data.defaultCompany).to.eql(139);\r",
+									"    \r",
+									"//});\r",
+									"\r",
+									"var moment = require('moment');\r",
+									"pm.globals.set('_todayTime', moment().format((\"YYYY-MM-DDTHH:mm:ss\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer null"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Qc user1\",\r\n    \"password\": \"123Qaz?\",\r\n    \"defaultLanguage\": 1\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1001/api/account/login",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1001",
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE_PurchaseInvoice1_Header",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"var response = pm.response.json();\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.globals.set(\"_idPurchaseInvoiceHeader1\", response.data.id);\r",
+									"pm.globals.set(\"_purchaseInquiryNumber1\", response.data.purchaseInquiryNumber);\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Successful Registeration Header PurchaseInvoice\", function () {\r",
+									"    pm.expect(response.friendlyMessages[0].message).to.eql(\"ركورد با موفقیت ثبت شد\");\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzOTgwMjkxNy1iYWI2LTQzMDYtOGI1OC03N2E2NTRhOTIxZDYiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDcwMzExNTcsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI1N2NiODEwMy0xNzYwLTQ0NTItYTUwZC0wMGIzOWI3MGFiYWEiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNzAzMTE1NywiZXhwIjoxNzA3MDQ5MTU3LCJhdWQiOiJBbnkifQ.XeBUK-5w4wjefIFiVCdXVa1eiM76uqGuHnmzL5laLaI"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.purchaseInvoice.purchaseInvoiceHeader"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"checked\": false,\r\n    \"purchaseTypeCode\": 2,\r\n    \"purchaseInvoiceTypeCode\": 8,\r\n    \"purchaseInvoiceTypeId\": 17,\r\n    \"goodTypeUsageCode\": 1,\r\n    \"goodTypeUsageCodeName\": \"کالا\",\r\n    \"mainCurrencyTypeId\": 5,\r\n    \"mainCurrencyTypeIdName\": \"ریال\",\r\n    \"purchaseInvoiceHeaderStatusCode\": 1,\r\n    \"purchaseInvoiceHeaderStatusCodeName\": \"پیش نویس\",\r\n    \"purchaseExpertPartyIdName\": \"کاربر QC\",\r\n    \"invoiceNumber\": \"PI1402003353\",\r\n    \"invoiceDate\": \"{{_todayTime}}\",\r\n    \"invoiceValidateDate\": null,\r\n    \"purchaseInvoiceSubTypeIdName\": \"پیشنهاد قیمت Quotation\",\r\n    \"purchaseInvoiceSubTypeId\": 216,\r\n    \"purchaseInquiryHeaderIdName\": \"IQ14020117000964   همه تامين کنندگان\",\r\n    \"supplierIdName\": \"خدمات ساحلی تیام دریا _ 14009205749\",\r\n    \"supplierId\": 4039,\r\n    \"purchaseInquiryHeaderId\": {{_idPurchaseInquiryHeader}},\r\n    \"grandTotal\": \"1000\",\r\n    \"currencyTypeIdName\": \"دلار\",\r\n    \"currencyTypeId\": 1,\r\n    \"exchangeRate\": \"2\",\r\n    \"purchaseTeamId\": 13,\r\n    \"purchaseTeamIdName\": \"تیم خرید مستوری\"\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseInvoiceHeader/InsertPerformaAsync",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseInvoiceHeader",
+								"InsertPerformaAsync"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET_PurchaseInvoiceDetail1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.globals.set(\"_rowVersionPurchaseInvoiceDetail1\", response.data[0].rowVersion);\r",
+									"pm.globals.set(\"_idPurchaseInvoiceDetail1\", response.data[0].id);\r",
+									"\r",
+									"pm.test(\"Has Error Is False\", function () {\r",
+									"    //var response = pm.response.json();\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzOTgwMjkxNy1iYWI2LTQzMDYtOGI1OC03N2E2NTRhOTIxZDYiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDcwMzExNTcsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI1N2NiODEwMy0xNzYwLTQ0NTItYTUwZC0wMGIzOWI3MGFiYWEiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNzAzMTE1NywiZXhwIjoxNzA3MDQ5MTU3LCJhdWQiOiJBbnkifQ.XeBUK-5w4wjefIFiVCdXVa1eiM76uqGuHnmzL5laLaI"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.purchaseInvoice.purchaseInvoiceDetail"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pageMeta\": {\r\n        \"currentPage\": 1,\r\n        \"perPage\": 10,\r\n        \"hasTotalSummarization\": false\r\n    },\r\n    \"filters\": {\r\n        \"purchaseInvoiceHeaderId\": {\r\n            \"value\": {{_idPurchaseInvoiceHeader1}},\r\n            \"matchMode\": \"equals\",\r\n            \"type\": \"number\",\r\n            \"internal\": 1\r\n        }\r\n    },\r\n    \"sortMeta\": [],\r\n    \"fastFilter\": null,\r\n    \"isWholeCompanies\": false,\r\n    \"companies\": []\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseInvoiceDetail/getallasync/",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseInvoiceDetail",
+								"getallasync",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE_PurchaseInvoiceDetail1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"var response = pm.response.json();\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    //var response = pm.response.json();\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Successful Update\", function () {\r",
+									"    //var response = pm.response.json();\r",
+									"    pm.expect(response.friendlyMessages[0].message).to.eql(\"ركورد با موفقیت ثبت شد\");\r",
+									"   \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzOTgwMjkxNy1iYWI2LTQzMDYtOGI1OC03N2E2NTRhOTIxZDYiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDcwMzExNTcsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI1N2NiODEwMy0xNzYwLTQ0NTItYTUwZC0wMGIzOWI3MGFiYWEiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNzAzMTE1NywiZXhwIjoxNzA3MDQ5MTU3LCJhdWQiOiJBbnkifQ.XeBUK-5w4wjefIFiVCdXVa1eiM76uqGuHnmzL5laLaI"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.purchaseInvoice.purchaseInvoiceDetail"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"checked\": false,\r\n    \"purchaseInvoiceHeaderId\": {{_idPurchaseInvoiceHeader1}},\r\n    \"purchaseInvoiceHeaderIdName\": null,\r\n    \"goodTypeCode\": 1,\r\n    \"goodTypeCodeName\": \"کالا\",\r\n    \"productId\": 10613,\r\n    \"productIdName\": \"سدیم لوریل اتر سولفات %70 (SLES)\",\r\n    \"productBatchId\": null,\r\n    \"productBatchIdName\": null,\r\n    \"measureUnitId\": 6,\r\n    \"measureUnitIdName\": \"كيلوگرم\",\r\n    \"rowOrder\": 1,\r\n    \"purchaseInvoiceAmount\": \"1000\",\r\n    \"purchaseUnitPrice\": \"1\",\r\n    \"subTotal\": \"1000\",\r\n    \"mainMeasureUnitId\": 6,\r\n    \"mainMeasureUnitIdName\": \"كيلوگرم\",\r\n    \"mainInvoiceAmount\": 1000,\r\n    \"purchaseInvoiceDetailStatusCode\": 1,\r\n    \"purchaseInvoiceDetailStatusCodeName\": \"پیش نویس\",\r\n    \"costTotal\": 1000,\r\n  //  \"invoiceNumber\": \"PI1402003353\",\r\n    \"supplierId\": 4039,\r\n    \"purchaseInquiryHeaderId\": {{_idPurchaseInquiryHeader}},\r\n    \"supplierIdName\": \"خدمات ساحلی تیام دریا _ 14009205749\",\r\n    \"invoiceDate\": \"{{_todayTime}}\",\r\n    \"actionFee\": 0,\r\n    \"actionInventory\": 0,\r\n    \"actionOrder\": 0,\r\n    \"actionFund\": 0,\r\n    \"countActionFee\": 0,\r\n    \"countActionInventory\": 0,\r\n    \"countActionOrder\": 0,\r\n    \"countActionFund\": 0,\r\n    \"name\": null,\r\n    \"number\": null,\r\n    \"referenceEntityName\": \"PurchaseInquiryDetail\",\r\n    \"referenceObjectId\": 0,\r\n    \"referenceObjectNumber\": null,\r\n    \"referenceDescription\": null,\r\n    \"purchaseContractId\": null,\r\n    \"contractLimitationTypeCode\": 0,\r\n    \"contractLimitationTypeCodeName\": null,\r\n    \"contractTotalPrice\": null,\r\n    \"isFreeOfCharge\": 0,\r\n    \"exchangeRate\": null,\r\n    \"description\": null,\r\n    \"incotermIdName\": null,\r\n    \"currencyTypeId\": 0,\r\n    \"currencyTypeIdName\": null,\r\n    \"checkForeignAccess\": false,\r\n    \"estimateDeliveryDate\": \"{{_todayTime}}\",\r\n    \"purchaseRealUnitPrice\": \"1\",\r\n    \"isWinner\": false,\r\n    \"purchaseInvoiceSubTypeCode\": 2,\r\n    \"equivalentPrice\": 0,\r\n    \"actionFeeBasedCurrency\": 0,\r\n    \"createdByName\": \"کاربر QC\",\r\n    \"modifiedByName\": \"کاربر QC\",\r\n    \"ownerIdName\": null,\r\n    \"stateCodeName\": null,\r\n    \"companyId\": 117,\r\n    \"branchId\": 117,\r\n    \"stateCode\": 1,\r\n    \"isDeleted\": false,\r\n    \"recGuid\": \"a4548318-2f01-4b0f-be94-d7f39b465ae7\",\r\n    \"ownerId\": 1105,\r\n    \"createdBy\": 1105,\r\n    \"createdOn\": \"{{_todayTime}}\",\r\n    \"modifiedBy\": 1105,\r\n    \"modifiedOn\": \"{{_todayTime}}\",\r\n    \"rowVersion\": \"{{_rowVersionPurchaseInvoiceDetail1}}\",\r\n    \"id\": {{_idPurchaseInvoiceDetail1}},\r\n    \"$$settings\": {\r\n        \"bodyHeight\": 150,\r\n        \"sortable\": true,\r\n        \"filter\": true,\r\n        \"clearAllFiltersIcon\": true,\r\n        \"columnResizeMode\": \"simple\",\r\n        \"virtualScroll\": false,\r\n        \"headerRowHeight\": 30,\r\n        \"rowHeight\": 23,\r\n        \"rowNumber\": true,\r\n        \"contextMenu\": true,\r\n        \"actionColumnWidth\": 2,\r\n        \"paginator\": true,\r\n        \"isLov\": false,\r\n        \"showGridTitle\": true,\r\n        \"i18nEnable\": true,\r\n        \"refreshRowBeforeEdit\": true,\r\n        \"workflowBaseUrl\": \"http://172.31.0.156:7300/api/StateMachineManager/\",\r\n        \"GridMode\": 2,\r\n        \"disableImportExcel\": true,\r\n        \"attachmentRowUseGuid\": true,\r\n        \"advancedFilter\": true,\r\n        \"enableDownload\": true,\r\n        \"enableDelete\": true,\r\n        \"multipleSelectionForLov\": false,\r\n        \"SelectionAllForLov\": false,\r\n        \"showAuditData\": true,\r\n        \"persistTableStruct\": false,\r\n        \"isMultiComapny\": false,\r\n        \"hideMultiCompanyFilter\": false,\r\n        \"hasTotalSummarization\": false,\r\n        \"crud\": true,\r\n        \"exportAction\": true,\r\n        \"globalFilter\": true,\r\n        \"columnToggleAction\": true,\r\n        \"clearAllFiltersAction\": true,\r\n        \"modalMinWidth\": 800,\r\n        \"gridName\": \"FRP.purchaseInvoice.purchaseInvoiceDetail\",\r\n        \"autoNumberMode\": false,\r\n        \"documentUpload\": {\r\n            \"entitySchema\": \"sup\",\r\n            \"entityName\": \"purchaseInvoiceDetail\",\r\n            \"attachmentTypeCode\": 1,\r\n            \"priority\": 1,\r\n            \"isPrimary\": true,\r\n            \"createThumbnail\": false,\r\n            \"thumbnailSize\": 100,\r\n            \"thumbnailQuality\": 50,\r\n            \"reasonId\": 1\r\n        },\r\n        \"documentServer\": \"http://172.31.31.5:1000/api/\",\r\n        \"initLoad\": true,\r\n        \"editMode\": \"editCellOnDblClick\",\r\n        \"manualLoad\": false,\r\n        \"singleRowView\": true,\r\n        \"disableSaveAndNewAction\": true,\r\n        \"multiple\": false,\r\n        \"superSelection\": false,\r\n        \"workflowCurrentId\": \"id\",\r\n        \"workflowFactor\": \"workflowFactor\",\r\n        \"checkWorkflowStarted\": false,\r\n        \"wfModalBeOpen\": false,\r\n        \"hasNextAndPrevButton\": true,\r\n        \"enableDefaultShortcuts\": true\r\n    },\r\n    \"$$uid\": 3,\r\n    \"$$index\": 0\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseInvoiceDetail/UpdateAsync/",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseInvoiceDetail",
+								"UpdateAsync",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE_PurchaseInvoiceCondition1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"var response = pm.response.json();\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Successful Registeration PurchaseInvoiceCondition1\", function () {\r",
+									"    pm.expect(response.friendlyMessages[0].message).to.eql(\"ركورد با موفقیت ثبت شد\");\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzOTgwMjkxNy1iYWI2LTQzMDYtOGI1OC03N2E2NTRhOTIxZDYiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDcwMzExNTcsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI1N2NiODEwMy0xNzYwLTQ0NTItYTUwZC0wMGIzOWI3MGFiYWEiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNzAzMTE1NywiZXhwIjoxNzA3MDQ5MTU3LCJhdWQiOiJBbnkifQ.XeBUK-5w4wjefIFiVCdXVa1eiM76uqGuHnmzL5laLaI"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.purchaseInvoice.purchaseInvoiceCondition"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"checked\": false,\r\n    \"isPartialShipmentAllowed\": true,\r\n    \"packingTypeId\": 1,\r\n    \"purchaseInvoiceHeaderId\": {{_idPurchaseInvoiceHeader1}},\r\n    \"isTransshipmentAllowed\": false,\r\n    \"estimateShipmentDate\": null,\r\n    \"estimateDeliveryDate\": null,\r\n    \"incotermIdName\": \"Delivered Place Unloaded (DPU)\",\r\n    \"incotermId\": 1\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseInvoiceCondition/InsertAsync/",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseInvoiceCondition",
+								"InsertAsync",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WorkFlow1_WorkflowAction_taeed2 bookmark",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"var response = pm.response.json();\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzOTgwMjkxNy1iYWI2LTQzMDYtOGI1OC03N2E2NTRhOTIxZDYiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDcwMzExNTcsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI1N2NiODEwMy0xNzYwLTQ0NTItYTUwZC0wMGIzOWI3MGFiYWEiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNzAzMTE1NywiZXhwIjoxNzA3MDQ5MTU3LCJhdWQiOiJBbnkifQ.XeBUK-5w4wjefIFiVCdXVa1eiM76uqGuHnmzL5laLaI"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 2,\r\n    \"RecordId\": {{_idPurchaseInvoiceHeader1}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"Confirm\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": []\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1030",
+							"path": [
+								"api",
+								"StateMachineManager",
+								"WorkflowAction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WorkFlow1_WorkflowAction_bookmark Tasvib",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"var response = pm.response.json();\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzOTgwMjkxNy1iYWI2LTQzMDYtOGI1OC03N2E2NTRhOTIxZDYiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDcwMzExNTcsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI1N2NiODEwMy0xNzYwLTQ0NTItYTUwZC0wMGIzOWI3MGFiYWEiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNzAzMTE1NywiZXhwIjoxNzA3MDQ5MTU3LCJhdWQiOiJBbnkifQ.XeBUK-5w4wjefIFiVCdXVa1eiM76uqGuHnmzL5laLaI"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 2,\r\n    \"RecordId\": {{_idPurchaseInvoiceHeader1}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"Confirm\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": []\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1030",
+							"path": [
+								"api",
+								"StateMachineManager",
+								"WorkflowAction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE_PurchaseInvoice2_Header",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"var response = pm.response.json();\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.globals.set(\"_idPurchaseInvoiceHeader2\", response.data.id);\r",
+									"pm.globals.set(\"_purchaseInquiryNumber2\", response.data.purchaseInquiryNumber);\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Successful Registeration Header PurchaseInvoice\", function () {\r",
+									"    pm.expect(response.friendlyMessages[0].message).to.eql(\"ركورد با موفقیت ثبت شد\");\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzOTgwMjkxNy1iYWI2LTQzMDYtOGI1OC03N2E2NTRhOTIxZDYiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDcwMzExNTcsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI1N2NiODEwMy0xNzYwLTQ0NTItYTUwZC0wMGIzOWI3MGFiYWEiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNzAzMTE1NywiZXhwIjoxNzA3MDQ5MTU3LCJhdWQiOiJBbnkifQ.XeBUK-5w4wjefIFiVCdXVa1eiM76uqGuHnmzL5laLaI"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.purchaseInvoice.purchaseInvoiceHeader"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"checked\": false,\r\n    \"goodTypeUsageCodeName\": \"کالا\",\r\n    \"mainCurrencyTypeIdName\": \"ریال\",\r\n    \"purchaseInvoiceHeaderStatusCodeName\": \"پیش نویس\",\r\n    \"purchaseExpertPartyIdName\": \"کاربر QC\",\r\n    \"purchaseTypeCode\": 2,\r\n    \"purchaseInvoiceTypeCode\": 8,\r\n    \"purchaseInvoiceTypeId\": 17,\r\n    \"goodTypeUsageCode\": 1,\r\n    \"mainCurrencyTypeId\": 5,\r\n    \"purchaseInvoiceHeaderStatusCode\": 1,\r\n    \"invoiceNumber\": \"PI1402003354\",\r\n    \"invoiceDate\": \"{{_todayTime}}\",\r\n    \"invoiceValidateDate\": null,\r\n    \"purchaseInvoiceSubTypeIdName\": \"پیشنهاد قیمت Quotation\",\r\n    \"purchaseInvoiceSubTypeId\": 216,\r\n    \"purchaseInquiryHeaderIdName\": \"IQ14020117000964   همه تامين کنندگان\",\r\n    \"supplierIdName\": \"FS FRAGRANCE SCIENCE _ 666\",\r\n    \"supplierId\": 3973,\r\n    \"purchaseInquiryHeaderId\": {{_idPurchaseInquiryHeader}},\r\n    \"grandTotal\": \"1500\",\r\n    \"currencyTypeIdName\": \"دلار\",\r\n    \"currencyTypeId\": 1,\r\n    \"exchangeRate\": \"2\",\r\n    \"purchaseTeamId\": 13,\r\n    \"purchaseTeamIdName\": \"تیم خرید مستوری\"\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseInvoiceHeader/InsertPerformaAsync",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseInvoiceHeader",
+								"InsertPerformaAsync"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET_PurchaseInvoiceDetail2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.globals.set(\"_rowVersionPurchaseInvoiceDetail2\", response.data[0].rowVersion);\r",
+									"pm.globals.set(\"_idPurchaseInvoiceDetail2\", response.data[0].id);\r",
+									"\r",
+									"pm.test(\"Has Error Is False\", function () {\r",
+									"    //var response = pm.response.json();\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzOTgwMjkxNy1iYWI2LTQzMDYtOGI1OC03N2E2NTRhOTIxZDYiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDcwMzExNTcsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI1N2NiODEwMy0xNzYwLTQ0NTItYTUwZC0wMGIzOWI3MGFiYWEiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNzAzMTE1NywiZXhwIjoxNzA3MDQ5MTU3LCJhdWQiOiJBbnkifQ.XeBUK-5w4wjefIFiVCdXVa1eiM76uqGuHnmzL5laLaI"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.purchaseInvoice.purchaseInvoiceDetail"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pageMeta\": {\r\n        \"currentPage\": 1,\r\n        \"perPage\": 10,\r\n        \"hasTotalSummarization\": false\r\n    },\r\n    \"filters\": {\r\n        \"purchaseInvoiceHeaderId\": {\r\n            \"value\": {{_idPurchaseInvoiceHeader2}},\r\n            \"matchMode\": \"equals\",\r\n            \"type\": \"number\",\r\n            \"internal\": 1\r\n        }\r\n    },\r\n    \"sortMeta\": [],\r\n    \"fastFilter\": null,\r\n    \"isWholeCompanies\": false,\r\n    \"companies\": []\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseInvoiceDetail/getallasync/",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseInvoiceDetail",
+								"getallasync",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE_PurchaseInvoiceDetail2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"var response = pm.response.json();\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    //var response = pm.response.json();\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Successful Update\", function () {\r",
+									"    //var response = pm.response.json();\r",
+									"    pm.expect(response.friendlyMessages[0].message).to.eql(\"ركورد با موفقیت ثبت شد\");\r",
+									"   \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzOTgwMjkxNy1iYWI2LTQzMDYtOGI1OC03N2E2NTRhOTIxZDYiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDcwMzExNTcsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI1N2NiODEwMy0xNzYwLTQ0NTItYTUwZC0wMGIzOWI3MGFiYWEiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNzAzMTE1NywiZXhwIjoxNzA3MDQ5MTU3LCJhdWQiOiJBbnkifQ.XeBUK-5w4wjefIFiVCdXVa1eiM76uqGuHnmzL5laLaI"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.purchaseInvoice.purchaseInvoiceDetail"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"checked\": false,\r\n    \"purchaseInvoiceHeaderId\": {{_idPurchaseInvoiceHeader2}},\r\n    \"purchaseInvoiceHeaderIdName\": null,\r\n    \"goodTypeCode\": 1,\r\n    \"goodTypeCodeName\": \"کالا\",\r\n    \"productId\": 10613,\r\n    \"productIdName\": \"سدیم لوریل اتر سولفات %70 (SLES)\",\r\n    \"productBatchId\": null,\r\n    \"productBatchIdName\": null,\r\n    \"measureUnitId\": 6,\r\n    \"measureUnitIdName\": \"كيلوگرم\",\r\n    \"rowOrder\": 1,\r\n    \"purchaseInvoiceAmount\": \"1000\",\r\n    \"purchaseUnitPrice\": \"1.5\",\r\n    \"subTotal\": \"1500\",\r\n    \"mainMeasureUnitId\": 6,\r\n    \"mainMeasureUnitIdName\": \"كيلوگرم\",\r\n    \"mainInvoiceAmount\": 1000,\r\n    \"purchaseInvoiceDetailStatusCode\": 1,\r\n    \"purchaseInvoiceDetailStatusCodeName\": \"پیش نویس\",\r\n    \"costTotal\": 1000,\r\n    \"invoiceNumber\": \"PI1402003354\",\r\n    \"supplierId\": 4039,\r\n    \"purchaseInquiryHeaderId\": 2859,\r\n    \"supplierIdName\": \"خدمات ساحلی تیام دریا _ 14009205749\",\r\n    \"invoiceDate\": \"{{_todayTime}}\",\r\n    \"actionFee\": 0,\r\n    \"actionInventory\": 0,\r\n    \"actionOrder\": 0,\r\n    \"actionFund\": 0,\r\n    \"countActionFee\": 0,\r\n    \"countActionInventory\": 0,\r\n    \"countActionOrder\": 0,\r\n    \"countActionFund\": 0,\r\n    \"name\": null,\r\n    \"number\": null,\r\n    \"referenceEntityName\": \"PurchaseInquiryDetail\",\r\n    \"referenceObjectId\": 0,\r\n    \"referenceObjectNumber\": null,\r\n    \"referenceDescription\": null,\r\n    \"purchaseContractId\": null,\r\n    \"contractLimitationTypeCode\": 0,\r\n    \"contractLimitationTypeCodeName\": null,\r\n    \"contractTotalPrice\": null,\r\n    \"isFreeOfCharge\": 0,\r\n    \"exchangeRate\": null,\r\n    \"description\": null,\r\n    \"incotermIdName\": null,\r\n    \"currencyTypeId\": 0,\r\n    \"currencyTypeIdName\": null,\r\n    \"checkForeignAccess\": false,\r\n    \"estimateDeliveryDate\": \"{{_todayTime}}\",\r\n    \"purchaseRealUnitPrice\": \"1\",\r\n    \"isWinner\": false,\r\n    \"purchaseInvoiceSubTypeCode\": 2,\r\n    \"equivalentPrice\": 0,\r\n    \"actionFeeBasedCurrency\": 0,\r\n    \"createdByName\": \"کاربر QC\",\r\n    \"modifiedByName\": \"کاربر QC\",\r\n    \"ownerIdName\": null,\r\n    \"stateCodeName\": null,\r\n    \"companyId\": 117,\r\n    \"branchId\": 117,\r\n    \"stateCode\": 1,\r\n    \"isDeleted\": false,\r\n    \"recGuid\": \"d128737b-bb58-4fb0-88d5-b3b6e704bcff\",\r\n    \"ownerId\": 1105,\r\n    \"createdBy\": 1105,\r\n    \"createdOn\": \"{{_todayTime}}\",\r\n    \"modifiedBy\": 1105,\r\n    \"modifiedOn\": \"{{_todayTime}}\",\r\n    \"rowVersion\": \"{{_rowVersionPurchaseInvoiceDetail2}}\",\r\n    \"id\": {{_idPurchaseInvoiceDetail2}},\r\n    \"$$settings\": {\r\n        \"bodyHeight\": 150,\r\n        \"sortable\": true,\r\n        \"filter\": true,\r\n        \"clearAllFiltersIcon\": true,\r\n        \"columnResizeMode\": \"simple\",\r\n        \"virtualScroll\": false,\r\n        \"headerRowHeight\": 30,\r\n        \"rowHeight\": 23,\r\n        \"rowNumber\": true,\r\n        \"contextMenu\": true,\r\n        \"actionColumnWidth\": 2,\r\n        \"paginator\": true,\r\n        \"isLov\": false,\r\n        \"showGridTitle\": true,\r\n        \"i18nEnable\": true,\r\n        \"refreshRowBeforeEdit\": true,\r\n        \"workflowBaseUrl\": \"http://172.31.0.156:7300/api/StateMachineManager/\",\r\n        \"GridMode\": 2,\r\n        \"disableImportExcel\": true,\r\n        \"attachmentRowUseGuid\": true,\r\n        \"advancedFilter\": true,\r\n        \"enableDownload\": true,\r\n        \"enableDelete\": true,\r\n        \"multipleSelectionForLov\": false,\r\n        \"SelectionAllForLov\": false,\r\n        \"showAuditData\": true,\r\n        \"persistTableStruct\": false,\r\n        \"isMultiComapny\": false,\r\n        \"hideMultiCompanyFilter\": false,\r\n        \"hasTotalSummarization\": false,\r\n        \"crud\": true,\r\n        \"exportAction\": true,\r\n        \"globalFilter\": true,\r\n        \"columnToggleAction\": true,\r\n        \"clearAllFiltersAction\": true,\r\n        \"modalMinWidth\": 800,\r\n        \"gridName\": \"FRP.purchaseInvoice.purchaseInvoiceDetail\",\r\n        \"autoNumberMode\": false,\r\n        \"documentUpload\": {\r\n            \"entitySchema\": \"sup\",\r\n            \"entityName\": \"purchaseInvoiceDetail\",\r\n            \"attachmentTypeCode\": 1,\r\n            \"priority\": 1,\r\n            \"isPrimary\": true,\r\n            \"createThumbnail\": false,\r\n            \"thumbnailSize\": 100,\r\n            \"thumbnailQuality\": 50,\r\n            \"reasonId\": 1\r\n        },\r\n        \"documentServer\": \"http://172.31.31.5:1000/api/\",\r\n        \"initLoad\": true,\r\n        \"editMode\": \"editCellOnDblClick\",\r\n        \"manualLoad\": false,\r\n        \"singleRowView\": true,\r\n        \"disableSaveAndNewAction\": true,\r\n        \"multiple\": false,\r\n        \"superSelection\": false,\r\n        \"workflowCurrentId\": \"id\",\r\n        \"workflowFactor\": \"workflowFactor\",\r\n        \"checkWorkflowStarted\": false,\r\n        \"wfModalBeOpen\": false,\r\n        \"hasNextAndPrevButton\": true,\r\n        \"enableDefaultShortcuts\": true\r\n    },\r\n    \"$$uid\": 10,\r\n    \"$$index\": 0\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseInvoiceDetail/UpdateAsync/",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseInvoiceDetail",
+								"UpdateAsync",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE_PurchaseInvoiceCondition2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"var response = pm.response.json();\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Successful Registeration PurchaseInvoiceCondition2\", function () {\r",
+									"    pm.expect(response.friendlyMessages[0].message).to.eql(\"ركورد با موفقیت ثبت شد\");\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzOTgwMjkxNy1iYWI2LTQzMDYtOGI1OC03N2E2NTRhOTIxZDYiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDcwMzExNTcsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI1N2NiODEwMy0xNzYwLTQ0NTItYTUwZC0wMGIzOWI3MGFiYWEiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNzAzMTE1NywiZXhwIjoxNzA3MDQ5MTU3LCJhdWQiOiJBbnkifQ.XeBUK-5w4wjefIFiVCdXVa1eiM76uqGuHnmzL5laLaI"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.purchaseInvoice.purchaseInvoiceCondition"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"checked\": false,\r\n    \"isPartialShipmentAllowed\": true,\r\n    \"packingTypeId\": 1,\r\n    \"purchaseInvoiceHeaderId\": {{_idPurchaseInvoiceHeader2}},\r\n    \"isTransshipmentAllowed\": false,\r\n    \"estimateShipmentDate\": null,\r\n    \"estimateDeliveryDate\": null,\r\n    \"incotermIdName\": \"Delivered Place Unloaded (DPU)\",\r\n    \"incotermId\": 1\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseInvoiceCondition/InsertAsync/",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseInvoiceCondition",
+								"InsertAsync",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WorkFlow2_WorkflowAction_taeed2 bookmark",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"var response = pm.response.json();\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzOTgwMjkxNy1iYWI2LTQzMDYtOGI1OC03N2E2NTRhOTIxZDYiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDcwMzExNTcsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI1N2NiODEwMy0xNzYwLTQ0NTItYTUwZC0wMGIzOWI3MGFiYWEiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNzAzMTE1NywiZXhwIjoxNzA3MDQ5MTU3LCJhdWQiOiJBbnkifQ.XeBUK-5w4wjefIFiVCdXVa1eiM76uqGuHnmzL5laLaI"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 2,\r\n    \"RecordId\": {{_idPurchaseInvoiceHeader2}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"Confirm\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": []\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1030",
+							"path": [
+								"api",
+								"StateMachineManager",
+								"WorkflowAction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WorkFlow2_WorkflowAction_bookmark Tasvib",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"var response = pm.response.json();\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzOTgwMjkxNy1iYWI2LTQzMDYtOGI1OC03N2E2NTRhOTIxZDYiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDcwMzExNTcsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI1N2NiODEwMy0xNzYwLTQ0NTItYTUwZC0wMGIzOWI3MGFiYWEiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNzAzMTE1NywiZXhwIjoxNzA3MDQ5MTU3LCJhdWQiOiJBbnkifQ.XeBUK-5w4wjefIFiVCdXVa1eiM76uqGuHnmzL5laLaI"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 2,\r\n    \"RecordId\": {{_idPurchaseInvoiceHeader2}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"Confirm\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": []\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1030",
+							"path": [
+								"api",
+								"StateMachineManager",
+								"WorkflowAction"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "ایجاد 2 تا پروفرما با دو تا تامین کننده مختلف و نهایی کردن هر دو پروفرما"
+		},
+		{
+			"name": "Foreign purchase",
+			"item": [
+				{
+					"name": "login_ForeignOrder",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.globals.set(\"_authforeign\", response.data.token);\r",
+									"\r",
+									"\r",
+									"\r",
+									"//pm.test(\"Successful Get Company\", function () {\r",
+									"  //  pm.expect(response.data.defaultCompany).to.eql(139);\r",
+									"    \r",
+									"//});\r",
+									"\r",
+									"var moment = require('moment');\r",
+									"pm.globals.set('_todayTime', moment().format((\"YYYY-MM-DDTHH:mm:ss\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer null"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Qc user1\",\r\n    \"password\": \"123Qaz?\",\r\n    \"defaultLanguage\": 1\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1001/api/account/login",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1001",
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SetPurchaseWinner",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"\r",
+									"var response = pm.response.json();\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    //var response = pm.response.json();\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"//pm.test(\"Successful Registeration SetPerformaWinner\", function () {\r",
+									"   // pm.expect(response.friendlyMessages[0].message).to.eql(\"پروفرما با موفقیت انتخاب شد\");\r",
+									"    \r",
+									"//});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4MDk0OWE4Mi1kMTg4LTQ3MTktODIwNi03NWI5NTI1OGMzMzYiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDcxOTY2OTgsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiIxNzZiMWVlYS0wODVhLTQyNTAtYTA1ZC0zOGUxZGNlYzMzZTIiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNzE5NjY5OCwiZXhwIjoxNzA3MjE0Njk4LCJhdWQiOiJBbnkifQ.jMlg_gyy3qvH7yNfkQ-Bk8p--eK7z9fC-erebfRg84E"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.purchaseInvoice.purchaseInvoiceHeader"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"PurchaseInvoiceHeaderId\": {{_idPurchaseInvoiceHeader1}},\r\n    \"PurchaseInquiryHeaderId\": {{_idPurchaseInquiryHeader}},\r\n    \"PurchaseInquirySelected\": true\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseInvoiceHeader/SetPerformaWinner",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseInvoiceHeader",
+								"SetPerformaWinner"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WorkFlow_WorkflowAction_ReadyToFinal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"\r",
+									"var response = pm.response.json();\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    //var response = pm.response.json();\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4MzViNTI2My1jZTRkLTQ0YTMtYjI1OC1hODI0ZmJjMDRkOWEiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDc3MzU3MzEsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNywxMzksNDQ1IiwidG9rZW5JZCI6IjBkOWMxMDc2LWY5NTAtNDkwMS04NTQzLWM3N2FjNGM0OWU0OCIsImlzQWRtaW4iOiJUcnVlIiwibmJmIjoxNzA3NzM1NzMxLCJleHAiOjE3MDc3NTM3MzEsImF1ZCI6IkFueSJ9.i87_bwgxr-GUfZJ7K80kx8JRP6d-Au45iEv8qUkJ35U"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Mobile Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 10,\r\n    \"RecordId\": {{_idPurchaseInquiryHeader}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"Confirm\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": []\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1030",
+							"path": [
+								"api",
+								"StateMachineManager",
+								"WorkflowAction"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "تایین برنده و نهایی کردن وضعیت گردش کار ان"
+		},
+		{
+			"name": "Purchase order",
+			"item": [
+				{
+					"name": "login_ForeignOrder",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.globals.set(\"_authforeign\", response.data.token);\r",
+									"\r",
+									"\r",
+									"\r",
+									"//pm.test(\"Successful Get Company\", function () {\r",
+									"  //  pm.expect(response.data.defaultCompany).to.eql(139);\r",
+									"    \r",
+									"//});\r",
+									"\r",
+									"var moment = require('moment');\r",
+									"pm.globals.set('_todayTime', moment().format((\"YYYY-MM-DDTHH:mm:ss\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer null"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Qc user1\",\r\n    \"password\": \"123Qaz?\",\r\n    \"defaultLanguage\": 1\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1001/api/account/login",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1001",
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE_purchaseOrder_Header",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.globals.set(\"_idPurchaseOrder\", response.data.id);\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    //var response = pm.response.json();\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZjdiNTFhOC1mYmRjLTRkNjEtOGU3Yi04NTAwMjk3YmE0MjEiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDcyMTQ2MjIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI3MTZlMjFkMi01YzBmLTRlMGEtYjc5NC02NTMzOTNjNWM2OWQiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNzIxNDYyMiwiZXhwIjoxNzA3MjMyNjIyLCJhdWQiOiJBbnkifQ.YkPsYq4-6G6uvhRcz-UvGuDOe-DJlwgN2w6RGnv3GgM"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.purchaseOrder.purchaseOrderHeader"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Mobile Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"checked\": false,\r\n    \"referenceEntityName\": \"PurchaseInvoiceHeader\",\r\n    \"goodTypeUsageCode\": 1,\r\n    \"goodTypeUsageCodeName\": \"کالا\",\r\n    \"purchaseOrderTypeCode\": 5,\r\n    \"mainCurrencyTypeId\": 5,\r\n    \"mainCurrencyTypeIdName\": \"ریال\",\r\n    \"purchaseExpertPartyIdName\": \"کاربر QC\",\r\n    \"purchaseOrderHeaderStatusCodeName\": \"پیش نویس\",\r\n    \"purchaseOrderNumber\": \"PO1402000898\",\r\n    \"purchaseOrderDate\": \"{{_todayTime}}\",\r\n    \"purchaseTeamId\": 13,\r\n    \"purchaseTeamIdName\": \"تیم خرید مستوری\",\r\n    \"requestCategoryIdName\": \"طبقه بندی مستوری\",\r\n    \"requestCategoryId\": 38,\r\n    \"supplierIdName\": \"خدمات ساحلی تیام دریا _ 14009205749\",\r\n    \"supplierId\": 4039,\r\n    \"referenceObjectId\": 44282,\r\n    \"referenceObjectIdName\": \"{{_idPurchaseInvoiceHeader1}}\",\r\n    \"purchaseContractHeaderId\": null,\r\n    \"purchaseContractHeaderIdName\": null,\r\n    \"currencyTypeId\": 1,\r\n    \"currencyTypeIdName\": \"دلار\",\r\n    \"exchangeRate\": \"2\"\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseOrderHeader/InsertForeignAsync",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseOrderHeader",
+								"InsertForeignAsync"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WorkFlow_WorkflowAction_Confirm1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"\r",
+									"var response = pm.response.json();\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    //var response = pm.response.json();\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZjdiNTFhOC1mYmRjLTRkNjEtOGU3Yi04NTAwMjk3YmE0MjEiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDcyMTQ2MjIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI3MTZlMjFkMi01YzBmLTRlMGEtYjc5NC02NTMzOTNjNWM2OWQiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNzIxNDYyMiwiZXhwIjoxNzA3MjMyNjIyLCJhdWQiOiJBbnkifQ.YkPsYq4-6G6uvhRcz-UvGuDOe-DJlwgN2w6RGnv3GgM"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Mobile Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 12,\r\n    \"RecordId\": {{_idPurchaseOrder}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"Confirm\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": []\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1030",
+							"path": [
+								"api",
+								"StateMachineManager",
+								"WorkflowAction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WorkFlow_WorkflowAction_confirm2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"\r",
+									"var response = pm.response.json();\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    //var response = pm.response.json();\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkZjdiNTFhOC1mYmRjLTRkNjEtOGU3Yi04NTAwMjk3YmE0MjEiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDcyMTQ2MjIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiI3MTZlMjFkMi01YzBmLTRlMGEtYjc5NC02NTMzOTNjNWM2OWQiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwNzIxNDYyMiwiZXhwIjoxNzA3MjMyNjIyLCJhdWQiOiJBbnkifQ.YkPsYq4-6G6uvhRcz-UvGuDOe-DJlwgN2w6RGnv3GgM"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Mobile Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 12,\r\n    \"RecordId\": {{_idPurchaseOrder}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"Confirm\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": []\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1030",
+							"path": [
+								"api",
+								"StateMachineManager",
+								"WorkflowAction"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "ایجاد سفارش و نهایی کردن گردش کار ان"
+		},
+		{
+			"name": "crud Purchase Request",
+			"item": [
+				{
+					"name": "login_ForeignOrder",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.globals.set(\"_authforeign\", response.data.token);\r",
+									"\r",
+									"\r",
+									"\r",
+									"//pm.test(\"Successful Get Company\", function () {\r",
+									"  //  pm.expect(response.data.defaultCompany).to.eql(139);\r",
+									"    \r",
+									"//});\r",
+									"\r",
+									"var moment = require('moment');\r",
+									"pm.globals.set('_todayTime', moment().format((\"YYYY-MM-DDTHH:mm:ss\")));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer null"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Qc user1\",\r\n    \"password\": \"123Qaz?\",\r\n    \"defaultLanguage\": 1\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1001/api/account/login",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1001",
+							"path": [
+								"api",
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create_purchaseRequest_Header",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.globals.set(\"_idPurchaseRequestHeader\", response.data.id);\r",
+									"pm.globals.set(\"_purchaseRequestNumber\", response.data.purchaseRequestNumber);\r",
+									"\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Successful Registeration Header Purchase Request Normal\", function () {\r",
+									"    pm.expect(response.friendlyMessages[0].message).to.eql(\"ركورد با موفقیت ثبت شد\");\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ZDA4MGFkMy00OTY1LTQwZTAtYWIyYi0zMzQ3ZjQzOTIxNmYiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDE2NzM2NzYsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiJjODUxNDliOC02ZDdhLTQ0OGEtOWM2NC1kY2VlYTMxZjFmNWEiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwMTY3MzY3NiwiZXhwIjoxNzAxNjkxNjc2LCJhdWQiOiJBbnkifQ.VTB9o6o0ckHdV6pr3m8XaoT9pU2WdngFezihsizPhzc"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.operation.purchaseRequestHeader"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"checked\": false,\r\n    \"purchaseRequestDate\": \"{{_todayTime}}\",\r\n    \"purchaseRequestHeaderStatusCodeName\": \"پیش نویس\",\r\n    \"purchaseRequestHeaderStatusCode\": 1,\r\n    \"purchaseRequestTypeCode\": 1,\r\n    \"purchaseRequestNumber\": \"PR1402000775\",\r\n    \"requestCategoryIdName\": \"طبقه بندی مستوری\",\r\n    \"requestCategoryId\": 38,\r\n    \"goodTypeUsageCode\": 3,\r\n    \"goodTypeUsageCodeName\": \"هردو\",\r\n    \"partyOneId\": 14929,\r\n    \"partyOneIdName\": \"اشتهارد - مدیریت کارخانه _ 76\"\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseRequestHeader/InsertAsync/",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseRequestHeader",
+								"InsertAsync",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WorkFlow_WorkFlowAtion_Confirm1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.test(\"HasError IS false\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ZDA4MGFkMy00OTY1LTQwZTAtYWIyYi0zMzQ3ZjQzOTIxNmYiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDE2NzM2NzYsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiJjODUxNDliOC02ZDdhLTQ0OGEtOWM2NC1kY2VlYTMxZjFmNWEiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwMTY3MzY3NiwiZXhwIjoxNzAxNjkxNjc2LCJhdWQiOiJBbnkifQ.VTB9o6o0ckHdV6pr3m8XaoT9pU2WdngFezihsizPhzc"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 11,\r\n    \"RecordId\": {{_idPurchaseRequestHeader}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"WorkFlowStart\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": [\r\n            1105\r\n        ]\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1030",
+							"path": [
+								"api",
+								"StateMachineManager",
+								"WorkflowAction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WorkFlow_WorkFlowAtion_Confirm2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.test(\"HasError IS true\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(true);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"sucessful Get state\", function () {\r",
+									"   //var response = pm.response.json();\r",
+									"    pm.expect(response.InfoError.Message).to.eql(\"#.برای تغییر وضعیت حداقل یک ردیف جزئیات درخواست باید وجود داشته باشد.^5525\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ZDA4MGFkMy00OTY1LTQwZTAtYWIyYi0zMzQ3ZjQzOTIxNmYiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDE2NzM2NzYsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiJjODUxNDliOC02ZDdhLTQ0OGEtOWM2NC1kY2VlYTMxZjFmNWEiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwMTY3MzY3NiwiZXhwIjoxNzAxNjkxNjc2LCJhdWQiOiJBbnkifQ.VTB9o6o0ckHdV6pr3m8XaoT9pU2WdngFezihsizPhzc"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "SYSTEM.workflowChangeStatus"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"EntityId\": 11,\r\n    \"RecordId\": {{_idPurchaseRequestHeader}},\r\n    \"Factor\": null,\r\n    \"Bookmark\": \"Confirm1\",\r\n    \"Paraph\": \"\",\r\n    \"Parameter\": [],\r\n    \"SelectedAssignees\": {\r\n        \"ForInfo\": [],\r\n        \"ForAction\": [\r\n            1105\r\n        ]\r\n    },\r\n    \"CompanyId\": 117,\r\n    \"BranchId\": 117\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1030/api/StateMachineManager/WorkflowAction",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1030",
+							"path": [
+								"api",
+								"StateMachineManager",
+								"WorkflowAction"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create_purchaseRequest_Detail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.globals.set(\"_idPurchaseRequestDetail\", response.data.id);\r",
+									"pm.globals.set(\"_rowVersionPurchaseRequestDetail\", response.data.rowVersion);\r",
+									"\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Successful Registeration Detail Purchase Request Normal\", function () {\r",
+									"    pm.expect(response.friendlyMessages[0].message).to.eql(\"ركورد با موفقیت ثبت شد\");\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ZDA4MGFkMy00OTY1LTQwZTAtYWIyYi0zMzQ3ZjQzOTIxNmYiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDE2NzM2NzYsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiJjODUxNDliOC02ZDdhLTQ0OGEtOWM2NC1kY2VlYTMxZjFmNWEiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwMTY3MzY3NiwiZXhwIjoxNzAxNjkxNjc2LCJhdWQiOiJBbnkifQ.VTB9o6o0ckHdV6pr3m8XaoT9pU2WdngFezihsizPhzc"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.operation.purchaseRequestHeader.purchaseRequestDetail"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"checked\": false,\r\n    \"goodTypeCodeName\": \"کالا\",\r\n    \"goodTypeCode\": 1,\r\n    \"purchaseRequestDetailStatusCodeName\": \"پیش نویس\",\r\n    \"purchaseRequestDetailStatusCode\": 1,\r\n    \"requiredDate\": \"{{_todayTime}}\",\r\n    \"purchaseRequestHeaderId\": {{_idPurchaseRequestHeader}},\r\n    \"productId\": 10613,\r\n    \"productIdName\": \"(5001001000) سدیم لوریل اتر سولفات %70 (SLES)\",\r\n    \"measureUnitId\": 6,\r\n    \"measureUnitIdName\": \"كيلوگرم\",\r\n    \"amount\": \"1000\"\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseRequestDetail/InsertAsync/",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseRequestDetail",
+								"InsertAsync",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update_PurchaseRequest_Detail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.test(\"HasError IS false\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"pm.test(\"Successful update Detail Purchase Request Normal\", function () {\r",
+									"    pm.expect(response.friendlyMessages[0].message).to.eql(\"ركورد با موفقیت ثبت شد\");\r",
+									"    \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8,fa;q=0.7"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ZDA4MGFkMy00OTY1LTQwZTAtYWIyYi0zMzQ3ZjQzOTIxNmYiLCJpc3MiOiJBbnkiLCJpYXQiOjE3MDE2NzM2NzYsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiMTEwNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJRQyIsIkRpc3BsYXlOYW1lIjoiUUMiLCJ1c2VySWQiOiIxMTA1IiwiY29tcGFueUlkIjoiMTE3IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTE3IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjExNyIsInRva2VuSWQiOiJjODUxNDliOC02ZDdhLTQ0OGEtOWM2NC1kY2VlYTMxZjFmNWEiLCJpc0FkbWluIjoiVHJ1ZSIsIm5iZiI6MTcwMTY3MzY3NiwiZXhwIjoxNzAxNjkxNjc2LCJhdWQiOiJBbnkifQ.VTB9o6o0ckHdV6pr3m8XaoT9pU2WdngFezihsizPhzc"
+							},
+							{
+								"key": "Cache-Control",
+								"value": "no-cache"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5"
+							},
+							{
+								"key": "Pragma",
+								"value": "no-cache"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.operation.purchaseRequestHeader.purchaseRequestDetail"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"checked\": false,\r\n    \"$$settings\": {\r\n        \"bodyHeight\": 350,\r\n        \"sortable\": true,\r\n        \"filter\": true,\r\n        \"clearAllFiltersIcon\": true,\r\n        \"columnResizeMode\": \"simple\",\r\n        \"virtualScroll\": false,\r\n        \"headerRowHeight\": 30,\r\n        \"rowHeight\": 23,\r\n        \"rowNumber\": true,\r\n        \"contextMenu\": true,\r\n        \"actionColumnWidth\": 2,\r\n        \"paginator\": true,\r\n        \"isLov\": false,\r\n        \"showGridTitle\": false,\r\n        \"i18nEnable\": true,\r\n        \"refreshRowBeforeEdit\": true,\r\n        \"workflowBaseUrl\": \"http://172.31.0.156:7300/api/StateMachineManager/\",\r\n        \"GridMode\": 2,\r\n        \"disableImportExcel\": true,\r\n        \"attachmentRowUseGuid\": true,\r\n        \"advancedFilter\": true,\r\n        \"enableDownload\": true,\r\n        \"enableDelete\": true,\r\n        \"multipleSelectionForLov\": false,\r\n        \"SelectionAllForLov\": false,\r\n        \"showAuditData\": true,\r\n        \"persistTableStruct\": true,\r\n        \"isMultiComapny\": false,\r\n        \"hideMultiCompanyFilter\": false,\r\n        \"hasTotalSummarization\": false,\r\n        \"editMode\": \"editCellOnDblClick\",\r\n        \"initLoad\": false,\r\n        \"manualLoad\": false,\r\n        \"singleRowView\": true,\r\n        \"disableSaveAndNewAction\": true,\r\n        \"documentUpload\": {\r\n            \"entitySchema\": \"A\",\r\n            \"entityName\": \"B\",\r\n            \"attachmentTypeCode\": 1,\r\n            \"priority\": 1,\r\n            \"isPrimary\": true,\r\n            \"createThumbnail\": false,\r\n            \"thumbnailSize\": 100,\r\n            \"thumbnailQuality\": 50\r\n        },\r\n        \"modalMinWidth\": 600,\r\n        \"multiple\": false,\r\n        \"superSelection\": false,\r\n        \"workflowCurrentId\": \"id\",\r\n        \"workflowFactor\": \"workflowFactor\",\r\n        \"checkWorkflowStarted\": false,\r\n        \"wfModalBeOpen\": false,\r\n        \"hasNextAndPrevButton\": true,\r\n        \"enableDefaultShortcuts\": true,\r\n        \"crud\": true,\r\n        \"exportAction\": true,\r\n        \"globalFilter\": true,\r\n        \"columnToggleAction\": true,\r\n        \"clearAllFiltersAction\": true,\r\n        \"documentServer\": \"http://172.31.31.5:1000/api/\",\r\n        \"gridName\": \"FRP.operation.purchaseRequestHeader.purchaseRequestDetail\"\r\n    },\r\n    \"goodTypeCodeName\": \"کالا\",\r\n    \"goodTypeCode\": 1,\r\n    \"purchaseRequestDetailStatusCodeName\": \"پیش نویس\",\r\n    \"purchaseRequestDetailStatusCode\": 1,\r\n    \"requiredDate\": \"{{_todayTime}}\",\r\n    \"purchaseRequestHeaderId\": {{_idPurchaseRequestHeader}},\r\n    \"productId\": 10613,\r\n    \"productIdName\": \"5001001000 - سدیم لوریل اتر سولفات %70 (SLES)\",\r\n    \"measureUnitId\": 6,\r\n    \"measureUnitIdName\": \"كيلوگرم\",\r\n    \"amount\": \"2000\",\r\n    \"purchaseRequestHeaderIdName\": null,\r\n    \"productNumber\": \"5001001000\",\r\n    \"rowOrder\": 1,\r\n    \"approvedAmount\": null,\r\n    \"reducedAmount\": null,\r\n    \"mainAmount\": 1000,\r\n    \"mainMeasureUnitId\": 6,\r\n    \"mainMeasureUnitIdName\": \"كيلوگرم\",\r\n    \"mainApprovedAmount\": null,\r\n    \"mainReducedAmount\": null,\r\n    \"relationEntityName\": null,\r\n    \"relationObjectId\": null,\r\n    \"relationObjectIdName\": null,\r\n    \"relationObjectNumber\": null,\r\n    \"relationDescription\": null,\r\n    \"number\": null,\r\n    \"name\": null,\r\n    \"requestCategoryId\": 0,\r\n    \"purchaseOrderRequestCount\": 0,\r\n    \"used\": 0,\r\n    \"remain\": 1000,\r\n    \"purchaseRequestNumber\": \"{{_purchaseRequestNumber}}\",\r\n    \"purchaseRequestDate\": \"{{_todayTime}}\",\r\n    \"partyOneId\": 14929,\r\n    \"partyOneIdName\": \"اشتهارد - مدیریت کارخانه\",\r\n    \"productRequestDetailRequiredDate\": null,\r\n    \"purchaseMethodTypeCode\": null,\r\n    \"purchaseMethodTypeCodeName\": null,\r\n    \"description\": null,\r\n    \"purchaseTypeCode\": null,\r\n    \"purchaseTypeCodeName\": null,\r\n    \"isPartialInquiry\": false,\r\n    \"createdByName\": \"کاربر QC\",\r\n    \"modifiedByName\": \"کاربر QC\",\r\n    \"ownerIdName\": null,\r\n    \"stateCodeName\": \"فعال\",\r\n    \"companyId\": 117,\r\n    \"branchId\": 117,\r\n    \"stateCode\": 1,\r\n    \"isDeleted\": false,\r\n    \"recGuid\": \"ef5ab58b-b218-42b7-aff0-e705a8eb512b\",\r\n    \"ownerId\": 1105,\r\n    \"createdBy\": 1105,\r\n    \"createdOn\": \"{{_todayTime}}\",\r\n    \"modifiedBy\": 1105,\r\n    \"modifiedOn\": \"{{_todayTime}}\",\r\n    \"rowVersion\": \"{{_rowVersionPurchaseRequestDetail}}\",\r\n    \"id\": {{_idPurchaseRequestDetail}},\r\n    \"$$uid\": 3,\r\n    \"$$index\": 0\r\n}"
+						},
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseRequestDetail/UpdateAsync/",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseRequestDetail",
+								"UpdateAsync",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE_PurchaseRequest_Detail",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmZTcxZTdmOS0xZjI0LTRjMzUtYmIwOC1hYjg2MTdkNGY5MTkiLCJpc3MiOiJBbnkiLCJpYXQiOjE2NDk1Nzg5MjIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiODEzIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ItmF2LPYqtmI2LHbjCIsIkRpc3BsYXlOYW1lIjoi2YXYs9iq2YjYsduMIiwidXNlcklkIjoiODEzIiwiY29tcGFueUlkIjoiMTM5IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTM5IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjEzOSw0NDUiLCJ0b2tlbklkIjoiY2RmMWI1ZTItOTIyZC00MWM4LTk1NDEtOGZiODhjMTU3NDgwIiwiaXNBZG1pbiI6IkZhbHNlIiwibmJmIjoxNjQ5NTc4OTIyLCJleHAiOjE2NDk1OTY5MjIsImF1ZCI6IkFueSJ9.Zgjh_3uwDQFfqsB23Ihy1ujcS1cTMOxC0RFWKYgwP4I"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5:1022"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5:1022/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.operation.purchaseRequestHeader.purchaseRequestDetail"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36"
+							}
+						],
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseRequestDetail/DeleteAsync/{{_idPurchaseRequestDetail}}",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseRequestDetail",
+								"DeleteAsync",
+								"{{_idPurchaseRequestDetail}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE_PurchaseRequest_Header",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has a JSON body\", function () {\r",
+									"    pm.response.to.be.json;  \r",
+									"});\r",
+									"\r",
+									"let response= pm.response.json();\r",
+									"pm.test(\"HasError IS False\", function () {\r",
+									"    pm.expect(response.hasError).to.eql(false);\r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{_authforeign}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-US,en;q=0.9"
+							},
+							{
+								"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmZTcxZTdmOS0xZjI0LTRjMzUtYmIwOC1hYjg2MTdkNGY5MTkiLCJpc3MiOiJBbnkiLCJpYXQiOjE2NDk1Nzg5MjIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiODEzIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ItmF2LPYqtmI2LHbjCIsIkRpc3BsYXlOYW1lIjoi2YXYs9iq2YjYsduMIiwidXNlcklkIjoiODEzIiwiY29tcGFueUlkIjoiMTM5IiwibGFuZ1R5cGVDb2RlIjoiMSIsImJyYW5jaElkIjoiMTM5IiwiTGlzdE9mVXNlckNvbXBhbmllcyI6IjEzOSw0NDUiLCJ0b2tlbklkIjoiY2RmMWI1ZTItOTIyZC00MWM4LTk1NDEtOGZiODhjMTU3NDgwIiwiaXNBZG1pbiI6IkZhbHNlIiwibmJmIjoxNjQ5NTc4OTIyLCJleHAiOjE2NDk1OTY5MjIsImF1ZCI6IkFueSJ9.Zgjh_3uwDQFfqsB23Ihy1ujcS1cTMOxC0RFWKYgwP4I"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "http://172.31.31.5:1022"
+							},
+							{
+								"key": "Referer",
+								"value": "http://172.31.31.5:1022/"
+							},
+							{
+								"key": "Res-Type",
+								"value": "FRP.operation.purchaseRequestHeader"
+							},
+							{
+								"key": "Sub_System",
+								"value": "GIG-App-Frp"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36"
+							}
+						],
+						"url": {
+							"raw": "http://172.31.31.5:1022/api/PurchaseRequestHeader/DeleteAsync/{{_idPurchaseRequestHeader}}",
+							"protocol": "http",
+							"host": [
+								"172",
+								"31",
+								"31",
+								"5"
+							],
+							"port": "1022",
+							"path": [
+								"api",
+								"PurchaseRequestHeader",
+								"DeleteAsync",
+								"{{_idPurchaseRequestHeader}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "ایجاد درخواست خرید عادی ، ویرایش و حذف ان"
+		}
+	]
+}
